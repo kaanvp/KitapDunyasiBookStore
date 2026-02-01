@@ -1,0 +1,209 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Veritabani_Odevi
+build_property.RootNamespace = Veritabani_Odevi
+build_property.ProjectDir = C:\Users\vural\Desktop\proje\Veritabanı_Odevi\Veritabanı_Odevi\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\vural\Desktop\proje\Veritabanı_Odevi\Veritabanı_Odevi
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 8.0
+build_property.EnableCodeStyleSeverity = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Home/About.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBYm91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Home/Contact.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDb250YWN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Indirim/Aktif.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5kaXJpbVxBa3RpZi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Indirim/Duzenle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5kaXJpbVxEdXplbmxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Indirim/Ekle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5kaXJpbVxFa2xlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Indirim/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5kaXJpbVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Indirim/Islemler.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5kaXJpbVxJc2xlbWxlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Indirim/KitabaIndirimUygula.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5kaXJpbVxLaXRhYmFJbmRpcmltVXlndWxhLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Kategori/KategoriEkle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2F0ZWdvcmlcS2F0ZWdvcmlFa2xlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Kategori/KategoriGuncelle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2F0ZWdvcmlcS2F0ZWdvcmlHdW5jZWxsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Kategori/KategoriListele.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2F0ZWdvcmlcS2F0ZWdvcmlMaXN0ZWxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Kitap/AktifIndirimdekiKitaplar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2l0YXBcQWt0aWZJbmRpcmltZGVraUtpdGFwbGFyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Kitap/Ara.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2l0YXBcQXJhLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Kitap/Detay.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2l0YXBcRGV0YXkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Kitap/Islemler.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2l0YXBcSXNsZW1sZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Kitap/KitapDuzenle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2l0YXBcS2l0YXBEdXplbmxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Kitap/KitapEkle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2l0YXBcS2l0YXBFa2xlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Kitap/Kitaplar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2l0YXBcS2l0YXBsYXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Kitap/KitapListele.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2l0YXBcS2l0YXBMaXN0ZWxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Kullanici/Detay.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS3VsbGFuaWNpXERldGF5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Kullanici/Duzenle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS3VsbGFuaWNpXER1emVubGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Kullanici/GirisKayit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS3VsbGFuaWNpXEdpcmlzS2F5aXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Kullanici/KullaniciBilgileri.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS3VsbGFuaWNpXEt1bGxhbmljaUJpbGdpbGVyaS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Kullanici/Sil.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS3VsbGFuaWNpXFNpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Kullanici/TumKullanicilar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS3VsbGFuaWNpXFR1bUt1bGxhbmljaWxhci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Kullanici/_GirisPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS3VsbGFuaWNpXF9HaXJpc1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Kullanici/_KayitPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS3VsbGFuaWNpXF9LYXlpdFBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Odeme/Odeme.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT2RlbWVcT2RlbWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Rapor/EnAktifKullanicilar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmFwb3JcRW5Ba3RpZkt1bGxhbmljaWxhci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Rapor/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmFwb3JcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Rapor/KategoriBazliSatisRaporu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmFwb3JcS2F0ZWdvcmlCYXpsaVNhdGlzUmFwb3J1LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Rapor/KategoriIstatistik.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmFwb3JcS2F0ZWdvcmlJc3RhdGlzdGlrLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Rapor/KategoriYorumRaporu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmFwb3JcS2F0ZWdvcmlZb3J1bVJhcG9ydS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Sepet/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VwZXRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Shared/_YorumEkle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Zb3J1bUVrbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Siparis/Detay.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2lwYXJpc1xEZXRheS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Siparis/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2lwYXJpc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Siparis/Onay.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2lwYXJpc1xPbmF5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Yorum/Guncelle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcWW9ydW1cR3VuY2VsbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Yorum/Listeleme.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcWW9ydW1cTGlzdGVsZW1lLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vural/Desktop/proje/Veritabanı_Odevi/Veritabanı_Odevi/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-71k4mbf9od

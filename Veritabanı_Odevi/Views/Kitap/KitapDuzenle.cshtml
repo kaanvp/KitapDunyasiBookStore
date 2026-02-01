@@ -1,0 +1,441 @@
+﻿@model IEnumerable<Veritabani_Odevi.Models.Kitap>
+
+<style>
+    :root {
+        --primary-color: #16202A;
+        --primary-light: #1E2A38;
+        --secondary-color: #3B82F6;
+        --accent-color: #F59E0B;
+        --success-color: #10B981;
+        --danger-color: #EF4444;
+        --dark-color: #0F1419;
+        --light-gray: #1A2332;
+        --medium-gray: #374151;
+        --text-color: #F9FAFB;
+        --text-secondary: #D1D5DB;
+        --text-muted: #9CA3AF;
+        --border-color: #374151;
+        --card-bg: #1E2A38;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+    }
+
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--primary-color);
+    }
+
+    .container-wrapper {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 30px 15px;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        color: var(--text-color);
+    }
+
+    .page-header h1 {
+        font-size: 2rem;
+        margin: 0 0 8px 0;
+        font-weight: 700;
+    }
+
+    .page-header p {
+        margin: 0;
+        color: var(--text-secondary);
+    }
+
+    .content-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    @@media (max-width: 1024px) {
+        .content-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .list-section {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: var(--shadow);
+    }
+
+    .section-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--text-color);
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid var(--border-color);
+    }
+
+    .book-item {
+        background: var(--light-gray);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .book-item:hover {
+        background: var(--primary-light);
+        border-color: var(--secondary-color);
+        transform: translateX(4px);
+    }
+
+    .book-item.active {
+        background: rgba(59, 130, 246, 0.15);
+        border-color: var(--secondary-color);
+    }
+
+    .book-item-title {
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 4px;
+    }
+
+    .book-item-meta {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+    }
+
+    .form-section {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: var(--shadow);
+    }
+
+    .form-section.empty {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 400px;
+        color: var(--text-muted);
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        color: var(--text-color);
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .form-group input[type="number"] {
+        font-variant-numeric: tabular-nums;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        background-color: var(--light-gray) !important;
+        color: var(--text-color) !important;
+        border: 1px solid var(--border-color) !important;
+        border-radius: 8px;
+        padding: 12px 15px;
+        width: 100%;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+        outline: none;
+        border-color: var(--secondary-color) !important;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        background-color: var(--primary-light) !important;
+    }
+
+    .form-group textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 12px;
+        margin-top: 30px;
+    }
+
+    .btn {
+        padding: 12px 20px;
+        border-radius: 8px;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.95rem;
+    }
+
+    .btn-success {
+        background: var(--success-color);
+        color: white;
+        flex: 1;
+    }
+
+    .btn-success:hover {
+        background: #059669;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+    }
+
+    .btn-danger {
+        background: var(--danger-color);
+        color: white;
+        flex: 1;
+    }
+
+    .btn-danger:hover {
+        background: #991B1B;
+    }
+
+    .btn-secondary {
+        background: var(--border-color);
+        color: var(--text-color);
+        flex: 1;
+    }
+
+    .btn-secondary:hover {
+        background: var(--medium-gray);
+    }
+
+    .alert {
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    .alert-success {
+        background: rgba(16, 185, 129, 0.15);
+        color: var(--success-color);
+        border: 1px solid var(--success-color);
+    }
+
+    .alert-danger {
+        background: rgba(239, 68, 68, 0.15);
+        color: var(--danger-color);
+        border: 1px solid var(--danger-color);
+    }
+
+    .no-books {
+        text-align: center;
+        padding: 40px 20px;
+        color: var(--text-muted);
+    }
+
+    .no-books h4 {
+        color: var(--text-color);
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="container-wrapper">
+    <div class="page-header">
+        <h1>✏️ Kitap Düzenle & Sil</h1>
+        <p>Kitaplarınızı seçip düzenlemek veya silmek için aşağıdan seçiniz</p>
+    </div>
+
+    @if (TempData["Basarili"] != null)
+    {
+        <div class="alert alert-success">✅ @TempData["Basarili"]</div>
+    }
+
+    <div class="content-grid">
+        <!-- SOL: Kitaplar Listesi -->
+        <div class="list-section">
+            <div class="section-title">📚 Kitaplar</div>
+
+            @{
+                var seçiliKitap = (Veritabani_Odevi.Models.Kitap)ViewBag.SeçiliKitap;
+            }
+
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var kitap in Model)
+                {
+                    var isActive = seçiliKitap != null && seçiliKitap.KitapID == kitap.KitapID;
+                    <a href="@Url.Action("KitapDuzenle", "Kitap", new { id = kitap.KitapID })" style="text-decoration:none; color:inherit;">
+                        <div class="book-item @(isActive ? "active" : "")">
+                            <div class="book-item-title">@kitap.Baslik</div>
+                            <div class="book-item-meta">
+                                @kitap.Yazar • @kitap.Fiyat.ToString("C") • Stok: @kitap.StokAdedi
+                            </div>
+                        </div>
+                    </a>
+                }
+            }
+            else
+            {
+                <div class="no-books">
+                    <h4>Kitap Bulunamadı</h4>
+                    <p>Düzenlemek için önce <a href="@Url.Action("KitapEkle", "Kitap")" style="color:var(--secondary-color);">yeni bir kitap ekleyin</a>.</p>
+                </div>
+            }
+        </div>
+
+        <!-- SAĞ: Düzenleme Formu -->
+        <div class="form-section">
+            @if (seçiliKitap != null)
+            {
+                <div class="section-title">📝 Kitabı Düzenle</div>
+
+                <form asp-action="KitapDuzenle" method="post" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden" name="KitapID" value="@seçiliKitap.KitapID" />
+
+                    <div class="form-group">
+                        <label>Başlık</label>
+                        <input type="text" name="Baslik" value="@seçiliKitap.Baslik" class="form-control" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Yazar</label>
+                        <input type="text" name="Yazar" value="@(seçiliKitap.Yazar ?? "")" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Yayın Evi</label>
+                        <input type="text" name="YayinEvi" value="@(seçiliKitap.YayinEvi ?? "")" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>ISBN</label>
+                        <input type="text" name="ISBN" value="@(seçiliKitap.ISBN ?? "")" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Fiyat (₺)</label>
+                        <input type="number" name="Fiyat" value="@seçiliKitap.Fiyat.ToString("F2")" step="0.01" min="0" class="form-control" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Stok Adedi</label>
+                        <input type="number" name="StokAdedi" value="@seçiliKitap.StokAdedi" min="0" class="form-control" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Durum</label>
+                        <select name="Durum" class="form-control" required>
+                            @if (seçiliKitap.Durum == Veritabani_Odevi.Models.DurumEnum.Yeni) 
+                            { 
+                                <option value="Yeni" selected>Sıfır</option>
+                            } 
+                            else 
+                            { 
+                                <option value="Yeni">Sıfır</option>
+                            }
+                            @if (seçiliKitap.Durum == Veritabani_Odevi.Models.DurumEnum.CokIyi) 
+                            { 
+                                <option value="CokIyi" selected>Çok İyi</option>
+                            } 
+                            else 
+                            { 
+                                <option value="CokIyi">Çok İyi</option>
+                            }
+                            @if (seçiliKitap.Durum == Veritabani_Odevi.Models.DurumEnum.Iyi) 
+                            { 
+                                <option value="Iyi" selected>İyi</option>
+                            } 
+                            else 
+                            { 
+                                <option value="Iyi">İyi</option>
+                            }
+                            @if (seçiliKitap.Durum == Veritabani_Odevi.Models.DurumEnum.Orta) 
+                            { 
+                                <option value="Orta" selected>Orta</option>
+                            } 
+                            else 
+                            { 
+                                <option value="Orta">Orta</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Kapak Resmi URL</label>
+                        <input type="text" name="KapakResmiUrl" value="@(seçiliKitap.KapakResmiUrl ?? "")" class="form-control" placeholder="https://..." />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Kapak Resmi Dosyası (Yükle)</label>
+                        <input type="file" name="KapakDosyasi" class="form-control" accept="image/*" />
+                        <small class="text-muted">JPG, PNG, GIF vb. desteklenmektedir.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Açıklama</label>
+                        <textarea name="Aciklama" class="form-control">@(seçiliKitap.Aciklama ?? "")</textarea>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="submit" class="btn btn-success">💾 Kaydet</button>
+                        <button type="button" class="btn btn-danger" onclick="silKitap(@seçiliKitap.KitapID)">🗑️ Sil</button>
+                        <a href="@Url.Action("Islemler", "Kitap")" class="btn btn-secondary">✕ İptal</a>
+                    </div>
+                </form>
+            }
+            else
+            {
+                <div class="empty">
+                    <div>
+                        <h3 style="color: var(--text-color); margin-bottom:10px;">📖 Kitap Seçin</h3>
+                        <p>Düzenlemek istediğiniz kitabı sol taraftan seçiniz</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+function silKitap(kitapID) {
+    if (!confirm('Bu kitabı silmek istediğinizden emin misiniz?')) {
+        return;
+    }
+    
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '@Url.Action("KitapSil", "Kitap")';
+    
+    const idInput = document.createElement('input');
+    idInput.type = 'hidden';
+    idInput.name = 'id';
+    idInput.value = kitapID;
+    
+    const tokenInput = document.createElement('input');
+    tokenInput.type = 'hidden';
+    tokenInput.name = '__RequestVerificationToken';
+    tokenInput.value = document.querySelector('input[name="__RequestVerificationToken"]').value;
+    
+    form.appendChild(idInput);
+    form.appendChild(tokenInput);
+    document.body.appendChild(form);
+    form.submit();
+}
+</script>

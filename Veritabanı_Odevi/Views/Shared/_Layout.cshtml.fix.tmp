@@ -1,0 +1,66 @@
+                        <!-- Right Side Menu -->
+                        @{
+                            var kullaniciID = Context.Session.GetInt32("KullaniciID");
+                            var kullaniciAdi = Context.Session.GetString("KullaniciAdi");
+                            var kullaniciRol = Context.Session.GetString("KullaniciRol");
+                            
+                            int sepetAdet = 0;
+                            if (kullaniciID.HasValue)
+                            {
+                                var sepetRepo = Context.RequestServices.GetService<Veritabani_Odevi.Data.SepetRepository>();
+                                if (sepetRepo != null)
+                                {
+                                    var sepet = sepetRepo.SepetiGetir(kullaniciID.Value);
+                                    if(sepet != null)
+                                    {
+                                        sepetAdet = sepet.Sum(x => x.Adet);
+                                    }
+                                }
+                            }
+                        }
+                        
+                        @if (kullaniciID.HasValue && !string.IsNullOrEmpty(kullaniciAdi))
+                        {
+                            <!-- Kullanıcı Giriş Yaptığında - ID: @kullaniciID Adi: @kullaniciAdi -->
+                            <li class="nav-item ms-2">
+                                <div class="dropdown-container">
+                                    <a href="#" class="nav-link dropdown-link" id="userDropdownLink" onclick="toggleUserDropdown(event)">
+                                        <i class="fas fa-user me-1"></i>
+                                        @kullaniciAdi
+                                    </a>
+                                    <ul class="dropdown-menu-custom" id="userDropdownMenu">
+                                        <li>
+                                            <a class="dropdown-item-custom" asp-controller="Kullanici" asp-action="Detay" asp-route-id="@kullaniciID.Value">
+                                                <i class="fas fa-id-card me-2"></i> Profilim
+                                            </a>
+                                        </li>
+                                        @if (kullaniciRol == "Admin")
+                                        {
+                                            <li>
+                                                <a class="dropdown-item-custom" asp-controller="Kullanici" asp-action="TumKullanicilar">
+                                                    <i class="fas fa-users me-2"></i> Kullanıcı Yönetimi
+                                                </a>
+                                            </li>
+                                        }
+                                        <li>
+                                            <a class="dropdown-item-custom" asp-controller="Siparis" asp-action="Index">
+                                                <i class="fas fa-shopping-bag me-2"></i> Siparişlerim
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item-custom" asp-controller="Yorum" asp-action="Listeleme" asp-route-kullaniciID="@kullaniciID.Value">
+                                                <i class="fas fa-comment me-2"></i> Yorumlarım
+                                            </a>
+                                        </li>
+                                        <li><hr class="dropdown-divider-custom"></li>
+                                        <li>
+                                            <form asp-controller="Kullanici" asp-action="Cikis" method="post" style="width: 100%;">
+                                                <button class="dropdown-item-custom text-danger w-100 text-start" type="submit" style="border: none; background: none; cursor: pointer; padding: 12px 15px; font-weight: 500;">
+                                                    <i class="fas fa-sign-out-alt me-2"></i> <strong>Çıkış Yap</strong>
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        }

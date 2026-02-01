@@ -1,0 +1,200 @@
+﻿@model IEnumerable<Veritabani_Odevi.Models.Kitap>
+
+@{
+    ViewData["Title"] = "Kitaplar";
+}
+
+<style>
+    :root {
+        --primary-color: #16202A;
+        --primary-light: #1E2A38;
+        --secondary-color: #3B82F6;
+        --accent-color: #F59E0B;
+        --success-color: #10B981;
+        --dark-color: #0F1419;
+        --light-gray: #1A2332;
+        --medium-gray: #374151;
+        --text-color: #F9FAFB;
+        --text-secondary: #D1D5DB;
+        --text-muted: #9CA3AF;
+        --border-color: #374151;
+        --card-bg: #1E2A38;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+    }
+
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--primary-color);
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+        padding: 40px 20px;
+        margin-bottom: 40px;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+    }
+
+    .page-header h1 {
+        color: var(--text-color);
+        margin-bottom: 10px;
+    }
+
+    .page-header p {
+        color: var(--text-muted);
+    }
+
+    .book-card {
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all .3s ease;
+        box-shadow: var(--shadow);
+        background: var(--card-bg);
+        position: relative;
+        border: 1px solid var(--border-color);
+    }
+
+        .book-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--secondary-color);
+        }
+
+    .book-img-wrapper {
+        height: 240px;
+        background: var(--light-gray);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .book-img-wrapper img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            transition: transform .3s ease;
+        }
+
+    .book-card:hover img {
+        transform: scale(1.05);
+    }
+
+    .book-body {
+        padding: 15px;
+    }
+
+    .book-title {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 4px;
+    }
+
+    .book-author {
+        font-size: .9rem;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+    }
+
+    .book-price {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--success-color);
+    }
+
+    /* Overlay */
+    .action-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(22,32,42,.85);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        opacity: 0;
+        transition: opacity .3s ease;
+        flex-direction: column;
+    }
+
+    .book-card:hover .action-overlay {
+        opacity: 1;
+    }
+
+    .action-overlay a,
+    .action-overlay button {
+        border-radius: 30px;
+        padding: 10px 22px;
+        font-weight: 600;
+        border: none;
+        background: var(--secondary-color);
+        color: var(--text-color);
+        text-decoration: none;
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+
+    .action-overlay a:hover,
+    .action-overlay button:hover {
+        background: var(--accent-color);
+        color: var(--dark-color);
+    }
+
+    .action-overlay button {
+        width: auto;
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="page-header">
+        <h1>📚 Tüm Kitaplar</h1>
+        <p>Kütüphanemizin tüm kitaplarını keşfedin</p>
+    </div>
+
+    <div class="row g-4">
+
+        @foreach (var book in Model)
+        {
+            <div class="col-md-3">
+                <div class="book-card h-100">
+
+                    <div class="book-img-wrapper">
+                        <img src="@book.KapakResmiUrl" alt="@book.Baslik" />
+                    </div>
+
+                    <div class="book-body">
+                        <div class="book-title">@book.Baslik</div>
+                        <div class="book-author">@book.Yazar</div>
+                        <div class="book-price">@book.Fiyat.ToString("C2")</div>
+                    </div>
+
+                    <!-- İŞLEMLER OVERLAY -->
+                    <div class="action-overlay">
+
+                        <!-- Detay & Yorumlar -->
+                        <a asp-action="Detay"
+                           asp-route-id="@book.KitapID"
+                           class="btn btn-info">
+                            👁️ Detay & Yorumlar
+                        </a>
+
+                        <!-- Sepete Ekle -->
+                        <form asp-action="SepeteEkle" asp-controller="Sepet" method="post" style="display: inline;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="kitapID" value="@book.KitapID" />
+                            <input type="hidden" name="adet" value="1" />
+                            <button type="submit" class="btn btn-success">
+                                🛒 Sepete Ekle
+                            </button>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

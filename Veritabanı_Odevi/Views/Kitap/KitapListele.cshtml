@@ -1,0 +1,288 @@
+﻿@model IEnumerable<Veritabani_Odevi.DTOs.KitapListeDTO>
+
+@{
+    ViewData["Title"] = "Kitaplar";
+}
+<style>
+    :root {
+        --primary-color: #16202A;
+        --primary-light: #1E2A38;
+        --secondary-color: #3B82F6;
+        --accent-color: #F59E0B;
+        --success-color: #10B981;
+        --danger-color: #EF4444;
+        --dark-color: #0F1419;
+        --light-gray: #1A2332;
+        --medium-gray: #374151;
+        --text-color: #F9FAFB;
+        --text-secondary: #D1D5DB;
+        --text-muted: #9CA3AF;
+        --border-color: #374151;
+        --card-bg: #1E2A38;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+    }
+
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--primary-color);
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+        padding: 40px 20px;
+        border-radius: 12px;
+        margin-bottom: 40px;
+        text-align: center;
+        color: var(--text-color);
+    }
+
+    .page-header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    .page-header p {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        margin: 0;
+    }
+
+    .book-card {
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all .3s ease;
+        box-shadow: var(--shadow);
+        background: var(--card-bg);
+        position: relative;
+        border: 1px solid var(--border-color);
+    }
+
+        .book-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--secondary-color);
+        }
+
+    .book-img-wrapper {
+        height: 240px;
+        background: var(--light-gray);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .book-img-wrapper img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            transition: transform .3s ease;
+        }
+
+    .book-card:hover img {
+        transform: scale(1.05);
+    }
+
+    .book-body {
+        padding: 15px;
+    }
+
+    .book-title {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 4px;
+    }
+
+    .book-author {
+        font-size: .9rem;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+    }
+
+    .book-price {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--success-color);
+    }
+
+    .original-price {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        text-decoration: line-through;
+    }
+
+    .discount-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: linear-gradient(135deg, var(--danger-color), var(--accent-color));
+        color: var(--text-color);
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        z-index: 10;
+        box-shadow: var(--shadow);
+    }
+
+    .add-cart-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(22,32,42,.85);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity .3s ease;
+        padding: 15px;
+    }
+
+    .book-card:hover .add-cart-overlay {
+        opacity: 1;
+    }
+
+    .add-cart-overlay .d-flex {
+        width: 100%;
+        max-width: 220px;
+    }
+
+    .add-cart-overlay button,
+    .add-cart-overlay a {
+        border-radius: 8px;
+        padding: 12px 20px;
+        font-weight: 600;
+        border: none;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        font-size: 0.95rem;
+        width: 100%;
+    }
+
+    .add-cart-overlay .btn-success {
+        background: var(--success-color);
+        color: var(--dark-color);
+    }
+
+    .add-cart-overlay .btn-success:hover {
+        background: #059669;
+        color: var(--text-color);
+    }
+
+    .add-cart-overlay .btn-outline-light {
+        background: transparent;
+        border: 2px solid var(--text-color);
+        color: var(--text-color);
+    }
+
+    .add-cart-overlay .btn-outline-light:hover {
+        background: var(--secondary-color);
+        border-color: var(--secondary-color);
+        color: var(--text-color);
+    }
+</style>
+
+<div class="container mt-4">
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i> @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i> @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="page-header">
+        <h1>📚 Tüm Kitaplar</h1>
+        <p>Geniş koleksiyonumuz arasından istediğiniz kitabı bulun</p>
+    </div>
+
+    <div class="row g-4" id="bookContainer">
+        @foreach (var book in Model)
+        {
+            <div class="col-md-3 book-item"
+                 data-title="@book.Baslik.ToLower()"
+                 data-author="@book.Yazar?.ToLower()"
+                 data-price="@book.IndirimliFiyat">
+
+                <div class="book-card h-100">
+
+                    @if (book.IndirimVar)
+                    {
+                        <div class="discount-badge">
+                            %@book.IndirimOrani İndirim
+                        </div>
+                    }
+
+                    <div class="book-img-wrapper">
+                        <img src="@book.KapakResmiUrl" alt="@book.Baslik" />
+                    </div>
+
+                    <div class="book-body">
+                        <div class="book-title">@book.Baslik</div>
+                        <div class="book-author">@book.Yazar</div>
+                        
+                        @if (book.IndirimVar)
+                        {
+                            <div class="d-flex flex-column">
+                                <span class="original-price">@book.OrijinalFiyat.ToString("C2")</span>
+                                <span class="book-price">@book.IndirimliFiyat.ToString("C2")</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="book-price">@book.IndirimliFiyat.ToString("C2")</div>
+                        }
+                    </div>
+
+                    <div class="add-cart-overlay">
+                        <div class="d-flex flex-column gap-2">
+
+                            <!-- Sepete Ekle -->
+                            <form asp-controller="Sepet" asp-action="SepeteEkle" method="post" style="margin: 0;">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="kitapID" value="@book.KitapID" />
+                                <button class="btn btn-success">
+                                    🛒 Sepete Ekle
+                                </button>
+                            </form>
+
+                            <!-- Detay & Yorumlar -->
+                            <a asp-controller="Kitap"
+                               asp-action="Detay"
+                               asp-route-id="@book.KitapID"
+                               class="btn btn-outline-light">
+                                💬 Detay & Yorumlar
+                            </a>
+
+                            @if (Context.Session.GetInt32("KullaniciID") != null && Context.Session.GetInt32("KullaniciID") == book.SaticiKullaniciID)
+                            {
+                                <a asp-action="KitapDuzenle" asp-controller="Kitap" asp-route-id="@book.KitapID" class="btn" style="background:var(--accent-color); color:var(--dark-color);">✏️ Düzenle</a>
+
+                                <form asp-action="KitapSil" asp-controller="Kitap" method="post" style="margin:0;">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@book.KitapID" />
+                                    <button type="submit" class="btn" style="background:#DC2626; color:var(--text-color);" onclick="return confirm('Bu kitabı silmek istediğinizden emin misiniz?');">🗑️ Sil</button>
+                                </form>
+                            }
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        }
+    </div>
+</div>

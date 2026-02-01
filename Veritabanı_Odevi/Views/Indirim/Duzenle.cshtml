@@ -1,0 +1,233 @@
+@model Veritabani_Odevi.Models.Indirim
+
+@{
+    ViewData["Title"] = "İndirim Düzenle";
+}
+
+<style>
+    :root {
+        --primary-color: #16202A;
+        --primary-light: #1E2A38;
+        --secondary-color: #3B82F6;
+        --accent-color: #F59E0B;
+        --success-color: #10B981;
+        --danger-color: #EF4444;
+        --dark-color: #0F1419;
+        --light-gray: #1A2332;
+        --medium-gray: #374151;
+        --text-color: #F9FAFB;
+        --text-secondary: #D1D5DB;
+        --text-muted: #9CA3AF;
+        --border-color: #374151;
+        --card-bg: #1E2A38;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+    }
+
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--primary-color);
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+        padding: 40px 20px;
+        border-radius: 12px;
+        margin-bottom: 40px;
+        color: var(--text-color);
+    }
+
+    .page-header h1 {
+        font-size: 2rem;
+        margin: 0;
+        font-weight: 700;
+    }
+
+    .form-container {
+        background: var(--card-bg);
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        padding: 40px;
+        box-shadow: var(--shadow);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        display: block;
+        color: var(--text-color);
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        background: var(--light-gray);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        color: var(--text-color);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--secondary-color);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        background: var(--primary-light);
+    }
+
+    .form-control::placeholder {
+        color: var(--text-muted);
+    }
+
+    .form-control:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 15px;
+        margin-top: 40px;
+    }
+
+    .btn {
+        flex: 1;
+        padding: 12px 24px;
+        border-radius: 8px;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-success {
+        background: var(--success-color);
+        color: white;
+    }
+
+    .btn-success:hover {
+        background: #059669;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .btn-secondary {
+        background: var(--border-color);
+        color: var(--text-color);
+    }
+
+    .btn-secondary:hover {
+        background: var(--medium-gray);
+    }
+
+    .help-text {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-top: 5px;
+    }
+
+    .info-box {
+        background: rgba(59, 130, 246, 0.1);
+        border-left: 4px solid var(--secondary-color);
+        padding: 15px;
+        border-radius: 6px;
+        margin-bottom: 25px;
+        color: var(--text-secondary);
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="page-header">
+        <h1>✏️ İndirim Düzenle</h1>
+    </div>
+
+    <div class="form-container">
+        <div class="info-box">
+            <strong>İndirim ID:</strong> @Model.IndirimID
+        </div>
+
+        <form asp-action="Duzenle" method="post">
+            <input type="hidden" asp-for="IndirimID" />
+
+            <div class="form-group">
+                <label asp-for="IndirimAdi" class="form-label">İndirim Adı</label>
+                <input type="text" asp-for="IndirimAdi" class="form-control" required>
+                <span asp-validation-for="IndirimAdi" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="IndirimOrani" class="form-label">İndirim Oranı (%)</label>
+                <input type="number" asp-for="IndirimOrani" class="form-control" min="1" max="100" step="1" required>
+                <div class="help-text">1-100 arası bir değer girin</div>
+                <span asp-validation-for="IndirimOrani" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="BaslangicTarihi" class="form-label">Başlangıç Tarihi</label>
+                <input type="datetime-local" asp-for="BaslangicTarihi" class="form-control" required>
+                <span asp-validation-for="BaslangicTarihi" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="BitisTarihi" class="form-label">Bitiş Tarihi</label>
+                <input type="datetime-local" asp-for="BitisTarihi" class="form-control" required>
+                <div class="help-text">İndirim bu tarihten sonra geçersiz olacaktır</div>
+                <span asp-validation-for="BitisTarihi" class="text-danger"></span>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn btn-success">✓ Kaydet</button>
+                <a asp-action="Index" class="btn btn-secondary">✕ İptal</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Kitaba İndirim Uygulama Bölümü -->
+    <div class="form-container" style="margin-top: 40px;">
+        <h3 style="color: var(--accent-color); margin-bottom: 30px; font-weight: 700;">🔥 Bu İndirimi Kitaba Uygula</h3>
+
+        <form asp-action="KitabıIndirimeEkle" method="post">
+            <div class="form-group">
+                <label class="form-label">Kitap Seç</label>
+                <select name="kitapID" class="form-control" required>
+                    <option value="">-- Bir kitap seçin --</option>
+                    @if (ViewBag.Kitaplar != null)
+                    {
+                        @foreach (var kitap in (List<Veritabani_Odevi.Models.Kitap>)ViewBag.Kitaplar)
+                        {
+                            <option value="@kitap.KitapID">@kitap.Baslik - @kitap.Yazar (@kitap.Fiyat.ToString("C2"))</option>
+                        }
+                    }
+                </select>
+                <div class="help-text">Bu indirimi uygulamak istediğiniz kitabı seçin</div>
+            </div>
+
+            <input type="hidden" name="indirimID" value="@Model.IndirimID" />
+
+            <button type="submit" class="btn btn-success w-100">
+                ✓ İndirimi Uygula
+            </button>
+        </form>
+
+        <div class="info-box" style="margin-top: 25px; background: rgba(245, 158, 11, 0.1); border-left-color: var(--accent-color);">
+            <strong style="color: var(--accent-color);">ℹ️ Bilgi:</strong>
+            <p style="margin: 8px 0 0 0; color: var(--text-muted);">
+                %@Model.IndirimOrani indirim oranı <strong>@Model.BitisTarihi.ToString("dd.MM.yyyy")</strong> tarihine kadar geçerlidir.
+            </p>
+        </div>
+    </div>
+</div>

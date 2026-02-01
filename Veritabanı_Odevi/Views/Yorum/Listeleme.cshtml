@@ -1,0 +1,417 @@
+@model List<dynamic>
+
+@{
+    ViewData["Title"] = "Yaptığım Yorumlar";
+}
+
+<style>
+    .yorum-header {
+        margin-bottom: 30px;
+    }
+
+    .yorum-header h2 {
+        color: #F9FAFB;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .yorum-header p {
+        color: #9CA3AF;
+        margin: 0;
+    }
+
+    .stats-row {
+        display: flex;
+        gap: 24px;
+        margin-top: 20px;
+    }
+
+    .stat-box {
+        background: #1E2A38;
+        border: 1px solid #374151;
+        border-radius: 8px;
+        padding: 16px 24px;
+        text-align: center;
+    }
+
+    .stat-box .value {
+        color: #F9FAFB;
+        font-size: 1.5rem;
+        font-weight: 700;
+        display: block;
+    }
+
+    .stat-box .label {
+        color: #9CA3AF;
+        font-size: 0.85rem;
+    }
+
+    .empty-state {
+        background: #1E2A38;
+        border: 1px solid #374151;
+        border-radius: 12px;
+        padding: 60px 30px;
+        text-align: center;
+    }
+
+    .empty-state-icon {
+        font-size: 3rem;
+        margin-bottom: 20px;
+    }
+
+    .empty-state h4 {
+        color: #F9FAFB;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .empty-state p {
+        color: #9CA3AF;
+        margin-bottom: 20px;
+    }
+
+    .btn-alisveris {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 24px;
+        background: #3B82F6;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-alisveris:hover {
+        background: #2563EB;
+        color: #fff;
+    }
+
+    .alert-info-custom {
+        background: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        border-radius: 8px;
+        color: #F9FAFB;
+        padding: 14px 20px;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .yorum-card {
+        background: #1E2A38;
+        border: 1px solid #374151;
+        border-left: 3px solid #3B82F6;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        margin-bottom: 20px;
+    }
+
+    .yorum-card:hover {
+        border-color: #3B82F6;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .yorum-card-header {
+        padding: 20px 24px;
+        border-bottom: 1px solid #374151;
+    }
+
+    .kitap-link {
+        color: #3B82F6;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: color 0.2s ease;
+    }
+
+    .kitap-link:hover {
+        color: #60A5FA;
+    }
+
+    .yorum-baslik {
+        color: #F9FAFB;
+        font-weight: 600;
+        font-size: 1.05rem;
+        margin-top: 8px;
+        margin-bottom: 0;
+    }
+
+    .stars {
+        display: flex;
+        gap: 2px;
+    }
+
+    .star {
+        font-size: 1.1rem;
+        color: #F59E0B;
+    }
+
+    .star.empty {
+        color: #4B5563;
+    }
+
+    .puan-text {
+        color: #9CA3AF;
+        font-size: 0.85rem;
+        margin-top: 4px;
+    }
+
+    .yorum-card-body {
+        padding: 20px 24px;
+    }
+
+    .yorum-icerik {
+        color: #D1D5DB;
+        line-height: 1.7;
+        margin-bottom: 16px;
+    }
+
+    .meta-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 16px;
+        border-top: 1px solid #374151;
+    }
+
+    .tarih {
+        color: #9CA3AF;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .status-badge {
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.8rem;
+    }
+
+    .status-badge.onayli {
+        background: rgba(16, 185, 129, 0.15);
+        color: #10B981;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .status-badge.beklemede {
+        background: rgba(245, 158, 11, 0.15);
+        color: #F59E0B;
+        border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .yorum-card-footer {
+        padding: 16px 24px;
+        background: rgba(0, 0, 0, 0.15);
+        display: flex;
+        gap: 12px;
+    }
+
+    .btn-action {
+        flex: 1;
+        padding: 10px 16px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-decoration: none;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+    }
+
+    .btn-edit {
+        background: rgba(245, 158, 11, 0.15);
+        color: #F59E0B;
+        border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .btn-edit:hover {
+        background: #F59E0B;
+        color: #0F1419;
+    }
+
+    .btn-delete {
+        background: rgba(239, 68, 68, 0.15);
+        color: #EF4444;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .btn-delete:hover {
+        background: #EF4444;
+        color: #fff;
+    }
+
+    .yorum-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+        gap: 20px;
+    }
+
+    @@media (max-width: 768px) {
+        .yorum-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .stats-row {
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            flex: 1;
+            min-width: 100px;
+        }
+    }
+</style>
+
+<div class="container py-5">
+    <!-- Sayfa Başlığı -->
+    <div class="yorum-header">
+        <h2>💬 Yaptığım Yorumlar</h2>
+        <p>Tüm yorumlarınızı burada görebilir, düzenleyebilir ve silebilirsiniz</p>
+
+        @if (Model != null && Model.Count > 0)
+        {
+            var toplamYorum = Model.Count;
+            var ortalamaPuan = Model.Average(y => (double)y.Puan);
+            var onayliYorum = Model.Count(y => (bool)y.OnayDurumu);
+
+            <div class="stats-row">
+                <div class="stat-box">
+                    <span class="value">@toplamYorum</span>
+                    <span class="label">Toplam Yorum</span>
+                </div>
+                <div class="stat-box">
+                    <span class="value">⭐ @ortalamaPuan.ToString("0.0")</span>
+                    <span class="label">Ortalama Puan</span>
+                </div>
+                <div class="stat-box">
+                    <span class="value">@onayliYorum</span>
+                    <span class="label">Onaylanan</span>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Uyarı Mesajı -->
+    @if (TempData["Mesaj"] != null)
+    {
+        <div class="alert-info-custom">
+            <i class="fas fa-info-circle"></i>
+            <span>@TempData["Mesaj"]</span>
+        </div>
+    }
+
+    <!-- Yorum Bulunmadı -->
+    @if (Model == null || Model.Count == 0)
+    {
+        <div class="empty-state">
+            <div class="empty-state-icon">📝</div>
+            <h4>Henüz yorum yapmamışsınız</h4>
+            <p>Okuduğunuz kitaplar hakkında yorum yaparak diğer okuyuculara yardımcı olabilirsiniz</p>
+            <a href="@Url.Action("Index", "Home")" class="btn-alisveris">
+                📚 Kitaplara Göz At
+            </a>
+        </div>
+    }
+    else
+    {
+        <!-- Yorumlar Grid -->
+        <div class="yorum-grid">
+            @foreach (var yorum in Model)
+            {
+                <div class="yorum-card">
+                    <!-- Kart Başlığı -->
+                    <div class="yorum-card-header">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <a href="@Url.Action("Detay", "Kitap", new { id = yorum.KitapID })"
+                                   class="kitap-link">
+                                    📖 @yorum.KitapAdi
+                                </a>
+
+                                @if (!string.IsNullOrEmpty(yorum.Baslik))
+                                {
+                                    <h5 class="yorum-baslik">@yorum.Baslik</h5>
+                                }
+                            </div>
+
+                            <div class="text-end">
+                                <div class="stars">
+                                    @for (int i = 0; i < 5; i++)
+                                    {
+                                        if (i < yorum.Puan)
+                                        {
+                                            <span class="star">★</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="star empty">★</span>
+                                        }
+                                    }
+                                </div>
+                                <div class="puan-text">@yorum.Puan / 5</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kart İçeriği -->
+                    <div class="yorum-card-body">
+                        <p class="yorum-icerik">@yorum.Icerik</p>
+
+                        <div class="meta-row">
+                            <div class="tarih">
+                                <i class="far fa-calendar-alt"></i>
+                                @yorum.YorumTarihi.ToString("dd.MM.yyyy HH:mm")
+                            </div>
+
+                            @if (yorum.OnayDurumu)
+                            {
+                                <span class="status-badge onayli">
+                                    ✓ Onaylı
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="status-badge beklemede">
+                                    ⏳ Beklemede
+                                </span>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Kart Footer -->
+                    <div class="yorum-card-footer">
+                        <a href="@Url.Action("Guncelle", "Yorum", new { yorumID = yorum.YorumID })"
+                           class="btn-action btn-edit">
+                            ✏️ Düzenle
+                        </a>
+
+                        <form asp-action="Sil" method="post" style="flex: 1; margin: 0;"
+                              onsubmit="return confirm('Bu yorumu silmek istediğinize emin misiniz?');">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="yorumID" value="@yorum.YorumID" />
+                            <input type="hidden" name="kullaniciID" value="@yorum.KullaniciID" />
+                            <input type="hidden" name="kitapID" value="@yorum.KitapID" />
+                            <button type="submit" class="btn-action btn-delete" style="width: 100%;">
+                                🗑️ Sil
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

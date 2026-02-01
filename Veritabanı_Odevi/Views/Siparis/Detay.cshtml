@@ -1,0 +1,86 @@
+﻿@model Veritabani_Odevi.Models.ViewModels.SiparisDetaySayfaViewModel
+
+@{
+    ViewData["Title"] = "Sipariş Detayı";
+}
+
+<h2 class="mb-3">📦 Sipariş No: @Model.SiparisNo</h2>
+
+<div class="card p-3 mb-4">
+    <p><b>Tarih:</b> @Model.SiparisTarihi.ToString("dd.MM.yyyy HH:mm")</p>
+    <p><b>Durum:</b> @Model.Durum</p>
+    <p><b>Teslimat Adresi:</b> @Model.TeslimatAdresi</p>
+</div>
+
+<hr />
+
+<h4>🛒 Sipariş Ürünleri</h4>
+
+@foreach (var urun in Model.Urunler)
+{
+    <div class="card mb-3 p-3 d-flex flex-row gap-3 align-items-center">
+
+        <img src="@urun.KapakResmiUrl"
+             alt="@urun.KitapAdi"
+             style="width:100px;height:140px;object-fit:cover;border-radius:8px;" />
+
+        <div>
+            <h5>@urun.KitapAdi</h5>
+            <p>Adet: @urun.Adet</p>
+            <p>Birim Fiyat: @urun.Fiyat ₺</p>
+            <strong>Alt Toplam: @urun.AltToplam ₺</strong>
+        </div>
+
+    </div>
+}
+
+
+<h4 class="text-success mt-4">
+    Toplam Tutar: @Model.ToplamTutar ₺
+</h4>
+
+<hr />
+
+<h3 class="mt-4">💳 Ödeme Bilgileri</h3>
+
+@if (Model.OdemeTuru == null)
+{
+    <div class="alert alert-warning">
+        Bu sipariş için henüz ödeme yapılmamış.
+    </div>
+}
+else
+{
+    <div class="card p-3 mb-3">
+        <p><b>Ödeme Türü:</b> @Model.OdemeTuru</p>
+        <p><b>Ödeme Durumu:</b> @Model.OdemeDurum</p>
+        <p><b>Ödeme Tarihi:</b> @Model.OdemeTarihi?.ToString("dd.MM.yyyy HH:mm")</p>
+
+        @if (!string.IsNullOrEmpty(Model.BankaOnayKodu))
+        {
+
+        }
+    </div>
+}
+
+<style>
+    .card {
+        background: linear-gradient(135deg, #16202A 0%, #0F1419 100%);
+        color: #fff;
+        border-radius: 10px;
+    }
+
+    hr {
+        border-color: #444;
+    }
+
+    h2, h3, h4 {
+        color: #f1f1f1;
+    }
+
+    .alert-warning {
+        background-color: #332701;
+        color: #ffd966;
+        border: none;
+    }
+</style>

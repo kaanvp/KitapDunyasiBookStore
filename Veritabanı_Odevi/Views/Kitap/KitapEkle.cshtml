@@ -1,0 +1,204 @@
+﻿@using Veritabani_Odevi.Models
+@model Veritabani_Odevi.Models.ViewModels.KitapEkleViewModel
+
+@{
+    ViewData["Title"] = "Yeni Kitap Ekle";
+}
+
+<style>
+    /* TEMA RENKLERİ */
+    :root {
+        --arka: #16202A;
+        --kart: #1B2531;
+        --input: #0F1620;
+        --border: #2A3A4D;
+        --yazi: #FFFFFF;
+        --yazi-passive: #ADB5BD;
+        --primary: #0D6EFD;
+        --primary-hover: #0A58CA;
+    }
+
+    body {
+        background-color: var(--arka);
+        color: var(--yazi);
+        font-family: Arial, sans-serif;
+    }
+
+    /* Kart */
+    .dark-card {
+        background-color: var(--kart) !important;
+        border: 1px solid #0C131A;
+        border-radius: 10px;
+    }
+
+    /* Header */
+    .dark-header {
+        background-color: var(--kart) !important;
+        border-bottom: 1px solid #0C131A;
+        color: var(--yazi);
+        padding: 15px 20px;
+    }
+
+    /* Inputlar */
+    .dark-input,
+    .dark-select {
+        background: var(--input) !important;
+        color: var(--yazi) !important;
+        border: 1px solid var(--border) !important;
+    }
+
+        .dark-input::placeholder {
+            color: var(--yazi-passive);
+        }
+
+    .form-check-label {
+        color: var(--yazi);
+    }
+
+    textarea.dark-input {
+        resize: vertical;
+    }
+
+    /* Butonlar */
+    .btn-success {
+        background-color: #198754 !important;
+        border-color: #198754 !important;
+    }
+
+        .btn-success:hover {
+            background-color: #157347 !important;
+        }
+
+    .btn-outline-light {
+        border-color: #FFFFFF !important;
+        color: #FFFFFF !important;
+    }
+
+        .btn-outline-light:hover {
+            background-color: #FFFFFF !important;
+            color: #000 !important;
+        }
+</style>
+@if (TempData["Basarili"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        <strong>✔ Başarılı!</strong> @TempData["Basarili"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="container mt-4">
+
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+
+            <div class="card dark-card shadow-lg">
+
+                <div class="dark-header">
+                    <h4 class="mb-0">📚 Satışa Kitap Ekle</h4>
+                </div>
+
+                <div class="card-body">
+
+                    <form asp-action="KitapEkle" method="post" enctype="multipart/form-data">
+
+                        <!-- 1. Satır -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Baslik">Kitap Başlığı *</label>
+                                <input asp-for="Baslik" class="form-control dark-input" required />
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Yazar">Yazar</label>
+                                <input asp-for="Yazar" class="form-control dark-input" />
+                            </div>
+                        </div>
+
+                        <!-- 2. Satır -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="YayinEvi">Yayınevi</label>
+                                <input asp-for="YayinEvi" class="form-control dark-input" />
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="ISBN">ISBN</label>
+                                <input asp-for="ISBN" class="form-control dark-input" />
+                            </div>
+                        </div>
+
+                        <!-- 3. Satır -->
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="Fiyat">Fiyat (₺) *</label>
+                                <input asp-for="Fiyat" type="number" step="0.01" class="form-control dark-input" min="0" required />
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="StokAdedi">Stok Adedi *</label>
+                                <input asp-for="StokAdedi" type="number" class="form-control dark-input" min="1" required />
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="Durum">Durum *</label>
+                                <select asp-for="Durum" class="form-select dark-select" required>
+                                    <option value="">Seçiniz</option>
+                                    <option value="Yeni">Sıfır</option>
+                                    <option value="CokIyi">Çok İyi</option>
+                                    <option value="Iyi">İyi</option>
+                                    <option value="Orta">Orta</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Açıklama -->
+                        <div class="mb-3">
+                            <label asp-for="Aciklama">Açıklama</label>
+                            <textarea asp-for="Aciklama" rows="4" class="form-control dark-input"></textarea>
+                        </div>
+
+                        <!-- Kategoriler -->
+                        <div class="mb-4">
+                            <label>Kategoriler *</label>
+                            <div class="row">
+                                @foreach (var kategori in ViewBag.Kategoriler as List<Kategori>)
+                                {
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input"
+                                                   type="checkbox"
+                                                   name="KategoriIDler"
+                                                   value="@kategori.KategoriID" />
+
+                                            <label class="form-check-label">
+                                                @kategori.KategoriAdi
+                                            </label>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Kapak -->
+                        <div class="mb-3">
+                            <label class="form-label">Kapak Resmi</label>
+                            <input type="file" name="KapakDosyasi" class="form-control dark-input" accept="books/*" />
+                        </div>
+
+                        <!-- Butonlar -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <a asp-action="Islemler" class="btn btn-outline-light px-4">İptal</a>
+                            <button type="submit" class="btn btn-success px-4">➕ Kitabı Ekle</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+

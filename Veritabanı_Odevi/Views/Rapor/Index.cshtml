@@ -1,0 +1,166 @@
+@{
+    ViewData["Title"] = "Raporlar";
+}
+
+<style>
+    :root {
+        --primary-color: #16202A;
+        --primary-light: #1E2A38;
+        --secondary-color: #3B82F6;
+        --accent-color: #F59E0B;
+        --success-color: #10B981;
+        --dark-color: #0F1419;
+        --light-gray: #1A2332;
+        --medium-gray: #374151;
+        --text-color: #F9FAFB;
+        --text-secondary: #D1D5DB;
+        --text-muted: #9CA3AF;
+        --border-color: #374151;
+        --card-bg: #1E2A38;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+    }
+
+    .report-container {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+        padding: 60px 20px;
+        color: var(--text-color);
+        text-align: center;
+        margin-bottom: 50px;
+        border-bottom: 2px solid var(--secondary-color);
+    }
+
+    .report-container h1 {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        font-weight: 700;
+    }
+
+    .report-container p {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+    }
+
+    .report-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        margin-bottom: 60px;
+    }
+
+    .report-card {
+        background: var(--card-bg);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: all 0.3s ease;
+        text-decoration: none;
+        color: var(--text-color);
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--border-color);
+    }
+
+    .report-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--secondary-color);
+    }
+
+    .report-card-header {
+        padding: 40px 20px;
+        text-align: center;
+        font-size: 3rem;
+        background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+        color: var(--text-color);
+    }
+
+    .report-card-body {
+        padding: 30px 20px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .report-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: var(--text-color);
+    }
+
+    .report-card p {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+        flex-grow: 1;
+    }
+
+    .report-card .btn {
+        align-self: flex-start;
+        margin-top: auto;
+        background: var(--secondary-color);
+        border-color: var(--secondary-color);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .report-card .btn:hover {
+        background: var(--accent-color);
+        border-color: var(--accent-color);
+        color: white;
+    }
+</style>
+
+<div class="report-container">
+    <h1>📊 Raporlar ve İstatistikler</h1>
+    <p>Sisteminizin performansını ve aktivitesini analiz edin</p>
+</div>
+
+<div class="container">
+    <div class="report-grid">
+        <!-- Kategori Satış Raporu -->
+        <a href="@Url.Action("KategoriIstatistik", "Rapor")" class="report-card">
+            <div class="report-card-header">📈</div>
+            <div class="report-card-body">
+                <div>
+                    <h3>Kategori Satış Raporu</h3>
+                    <p>Kategori bazlı satış verileri, performans metrikleri ve gelir analizi</p>
+                </div>
+                <a href="@Url.Action("KategoriIstatistik", "Rapor")" class="btn">Görüntüle →</a>
+            </div>
+        </a>
+
+        <!-- Kategori Yorum Raporu -->
+        <a href="@Url.Action("KategoriYorumRaporu", "Rapor")" class="report-card">
+            <div class="report-card-header">💬</div>
+            <div class="report-card-body">
+                <div>
+                    <h3>Kategori Yorum Analizi</h3>
+                    <p>Müşteri yorumları, derecelendirilmeler ve geri bildirimler</p>
+                </div>
+                <a href="@Url.Action("KategoriYorumRaporu", "Rapor")" class="btn">Görüntüle →</a>
+            </div>
+        </a>
+
+        <!-- En Aktif Kullanıcılar -->
+        <a href="@Url.Action("EnAktifKullanicilar", "Rapor")" class="report-card">
+            <div class="report-card-header">👥</div>
+            <div class="report-card-body">
+                <div>
+                    <h3>En Aktif Kullanıcılar</h3>
+                    <p>Yorum yapan ve en çok etkileşimde bulunan kullanıcılar</p>
+                </div>
+                <a href="@Url.Action("EnAktifKullanicilar", "Rapor")" class="btn">Görüntüle →</a>
+            </div>
+        </a>
+    </div>
+</div>

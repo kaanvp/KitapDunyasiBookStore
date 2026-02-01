@@ -1,0 +1,242 @@
+@model List<Veritabani_Odevi.Models.Indirim>
+
+@{
+    ViewData["Title"] = "İndirim Yönetimi";
+}
+
+<style>
+    :root {
+        --primary-color: #16202A;
+        --primary-light: #1E2A38;
+        --secondary-color: #3B82F6;
+        --accent-color: #F59E0B;
+        --success-color: #10B981;
+        --danger-color: #EF4444;
+        --dark-color: #0F1419;
+        --light-gray: #1A2332;
+        --medium-gray: #374151;
+        --text-color: #F9FAFB;
+        --text-secondary: #D1D5DB;
+        --text-muted: #9CA3AF;
+        --border-color: #374151;
+        --card-bg: #1E2A38;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+    }
+
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--primary-color);
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, var(--danger-color) 0%, var(--accent-color) 100%);
+        padding: 40px 20px;
+        border-radius: 12px;
+        margin-bottom: 40px;
+        color: var(--text-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .page-header h1 {
+        font-size: 2rem;
+        margin: 0;
+        font-weight: 700;
+    }
+
+    .btn-add {
+        background: var(--success-color);
+        color: white;
+        padding: 12px 28px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-add:hover {
+        background: #059669;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .table-container {
+        background: var(--card-bg);
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+    }
+
+    table {
+        width: 100%;
+        color: var(--text-color);
+        margin: 0;
+    }
+
+    thead {
+        background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+    }
+
+    thead th {
+        padding: 15px;
+        text-align: left;
+        font-weight: 600;
+        color: var(--text-color);
+        border: none;
+    }
+
+    tbody tr {
+        border-top: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+    }
+
+    tbody tr:hover {
+        background: var(--primary-light);
+    }
+
+    tbody td {
+        padding: 15px;
+        color: var(--text-color);
+    }
+
+    .badge-info {
+        background: var(--secondary-color);
+        color: white;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .badge-danger {
+        background: var(--danger-color);
+        color: white;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 8px;
+    }
+
+    .btn-sm {
+        padding: 6px 14px;
+        font-size: 0.85rem;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 600;
+    }
+
+    .btn-edit {
+        background: var(--secondary-color);
+        color: white;
+    }
+
+    .btn-edit:hover {
+        background: #2563eb;
+    }
+
+    .btn-delete {
+        background: var(--danger-color);
+        color: white;
+    }
+
+    .btn-delete:hover {
+        background: #dc2626;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--text-muted);
+    }
+
+    .empty-state h4 {
+        color: var(--text-color);
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="page-header">
+        <h1>🔥 İndirim Yönetimi</h1>
+        <a asp-action="Ekle" class="btn-add">+ Yeni İndirim Ekle</a>
+    </div>
+
+    @if (Model.Count > 0)
+    {
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>İndirim Adı</th>
+                        <th>İndirim Oranı</th>
+                        <th>Başlangıç Tarihi</th>
+                        <th>Bitiş Tarihi</th>
+                        <th>Durum</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var indirim in Model)
+                    {
+                        var bitisTarihi = indirim.BitisTarihi;
+                        var aktif = bitisTarihi > DateTime.Now;
+
+                        <tr>
+                            <td><strong>@indirim.IndirimAdi</strong></td>
+                            <td>
+                                <span class="badge-info">%@indirim.IndirimOrani</span>
+                            </td>
+                            <td>@indirim.BaslangicTarihi.ToString("dd.MM.yyyy")</td>
+                            <td>@indirim.BitisTarihi.ToString("dd.MM.yyyy")</td>
+                            <td>
+                                @if (aktif)
+                                {
+                                    <span class="badge-info">✓ Aktif</span>
+                                }
+                                else
+                                {
+                                    <span class="badge-danger">✕ Sona Erdi</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a asp-action="Duzenle" asp-route-id="@indirim.IndirimID" class="btn-sm btn-edit">
+                                        ✏️ Düzenle
+                                    </a>
+                                    <form asp-action="Sil" asp-route-id="@indirim.IndirimID" method="post" style="display: inline;" onsubmit="return confirm('Silmek istediğinizden emin misiniz?');">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn-sm btn-delete">
+                                            🗑️ Sil
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="empty-state">
+            <h4>Henüz indirim bulunmamaktadır</h4>
+            <p>Yeni bir indirim eklemek için <a asp-action="Ekle" style="color: var(--secondary-color);">buraya tıklayın</a></p>
+        </div>
+    }
+</div>

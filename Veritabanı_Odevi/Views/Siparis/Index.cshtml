@@ -1,0 +1,236 @@
+﻿@model List<Veritabani_Odevi.Models.ViewModels.SiparisViewModel>
+
+@{
+    ViewData["Title"] = "Siparişlerim";
+}
+
+<style>
+    .siparis-header {
+        margin-bottom: 30px;
+    }
+
+    .siparis-header h2 {
+        color: #F9FAFB;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .siparis-header p {
+        color: #9CA3AF;
+        margin: 0;
+    }
+
+    .empty-state {
+        background: #1E2A38;
+        border: 1px solid #374151;
+        border-radius: 12px;
+        padding: 60px 30px;
+        text-align: center;
+    }
+
+    .empty-state-icon {
+        font-size: 3rem;
+        margin-bottom: 20px;
+    }
+
+    .empty-state h4 {
+        color: #F9FAFB;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .empty-state p {
+        color: #9CA3AF;
+        margin-bottom: 20px;
+    }
+
+    .siparis-card {
+        background: #1E2A38;
+        border: 1px solid #374151;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .siparis-card:hover {
+        border-color: #3B82F6;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        transform: translateY(-3px);
+    }
+
+    .siparis-card .card-body {
+        padding: 24px;
+    }
+
+    .siparis-no {
+        color: #F9FAFB;
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 4px;
+    }
+
+    .siparis-tarih {
+        color: #9CA3AF;
+        font-size: 0.9rem;
+    }
+
+    .durum-badge {
+        padding: 6px 14px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+
+    .durum-badge.hazirlaniyor {
+        background: rgba(59, 130, 246, 0.15);
+        color: #3B82F6;
+        border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .durum-badge.kargoda {
+        background: rgba(245, 158, 11, 0.15);
+        color: #F59E0B;
+        border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .durum-badge.teslim-edildi {
+        background: rgba(16, 185, 129, 0.15);
+        color: #10B981;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .durum-badge.iptal {
+        background: rgba(239, 68, 68, 0.15);
+        color: #EF4444;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .siparis-divider {
+        border: none;
+        border-top: 1px solid #374151;
+        margin: 16px 0;
+    }
+
+    .tutar-label {
+        color: #9CA3AF;
+        font-size: 0.9rem;
+    }
+
+    .tutar-value {
+        color: #10B981;
+        font-weight: 700;
+        font-size: 1.2rem;
+    }
+
+    .btn-detay {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background: transparent;
+        border: 1px solid #3B82F6;
+        color: #3B82F6;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        text-align: center;
+        transition: all 0.3s ease;
+        margin-top: 16px;
+    }
+
+    .btn-detay:hover {
+        background: #3B82F6;
+        color: #fff;
+    }
+
+    .btn-alisveris {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 24px;
+        background: #3B82F6;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-alisveris:hover {
+        background: #2563EB;
+        color: #fff;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="siparis-header">
+        <h2>📦 Siparişlerim</h2>
+        <p>Tüm siparişlerinizi buradan takip edebilirsiniz</p>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state">
+            <div class="empty-state-icon">📭</div>
+            <h4>Henüz siparişiniz bulunmuyor</h4>
+            <p>İlk siparişinizi vermek için kitaplara göz atın</p>
+            <a asp-controller="Kitap" asp-action="KitapListele" class="btn-alisveris">
+                📚 Kitaplara Göz At
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var siparis in Model)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="siparis-card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <div class="siparis-no">
+                                        Sipariş #@siparis.SiparisNo
+                                    </div>
+                                    <div class="siparis-tarih">
+                                        <i class="far fa-calendar-alt me-1"></i>
+                                        @siparis.Tarih.ToString("dd.MM.yyyy HH:mm")
+                                    </div>
+                                </div>
+
+                                @{
+                                    var durumClass = siparis.Durum?.ToLower() switch
+                                    {
+                                        "hazırlanıyor" => "hazirlaniyor",
+                                        "kargoda" => "kargoda",
+                                        "teslim edildi" => "teslim-edildi",
+                                        "iptal" => "iptal",
+                                        _ => "hazirlaniyor"
+                                    };
+                                }
+                                <span class="durum-badge @durumClass">
+                                    @siparis.Durum
+                                </span>
+                            </div>
+
+                            <hr class="siparis-divider" />
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="tutar-label">Toplam Tutar</span>
+                                <span class="tutar-value">
+                                    @siparis.ToplamTutar.ToString("N2") ₺
+                                </span>
+                            </div>
+
+                            <a asp-action="Detay"
+                               asp-route-siparisID="@siparis.SiparisID"
+                               class="btn-detay">
+                                🔍 Sipariş Detayı
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

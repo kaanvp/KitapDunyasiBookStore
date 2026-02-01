@@ -1,0 +1,59 @@
+﻿@model Veritabani_Odevi.Models.Kullanici
+
+@{
+    ViewData["Title"] = "Kullanıcı Düzenle";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Kullanıcı Düzenle</h2>
+
+    <form asp-action="Duzenle" method="post">
+        <input type="hidden" asp-for="KullaniciID" />
+
+        <div class="mb-3">
+            <label class="form-label">Ad</label>
+            <input class="form-control" asp-for="Ad" />
+            <span asp-validation-for="Ad" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Soyad</label>
+            <input class="form-control" asp-for="Soyad" />
+            <span asp-validation-for="Soyad" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">E-posta</label>
+            <input class="form-control" asp-for="Eposta" />
+            <span asp-validation-for="Eposta" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Telefon</label>
+            <input class="form-control" asp-for="Telefon" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Adres</label>
+            <textarea class="form-control" asp-for="Adres"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Derecelendirme</label>
+            <input type="number" step="0.1" class="form-control" asp-for="Derecelendirme" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Rol</label>
+            <select class="form-select" asp-for="Rol">
+                <option value="Uye">Üye</option>
+                <option value="Admin">Admin</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+        <a asp-action="TumKullanicilar" class="btn btn-secondary ms-2">Geri Dön</a>
+    </form>
+</div>
+
+

@@ -1,0 +1,55 @@
+﻿@model Veritabani_Odevi.Models.Yorum
+
+<style>
+    .comment-form-card {
+        background: #fff;
+        border-radius: 14px;
+        padding: 25px;
+        box-shadow: 0 8px 25px rgba(0,0,0,.08);
+        color: #212529;
+    }
+
+        .comment-form-card label {
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+</style>
+
+<div class="comment-form-card mt-4">
+    <h5 class="mb-3">✍️ Yorum Yap</h5>
+
+    <form asp-controller="Yorum" asp-action="Ekle" method="post">
+
+        <input type="hidden" asp-for="KitapID" />
+        <input type="hidden" asp-for="KullaniciID" />
+
+        <div class="mb-3">
+            <label>Başlık</label>
+            <input asp-for="Baslik" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label>Yorum</label>
+            <textarea asp-for="Icerik"
+                      rows="4"
+                      class="form-control"
+                      required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label>Puan</label>
+            <select asp-for="Puan" class="form-select">
+                <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+                <option value="4">⭐⭐⭐⭐ (4)</option>
+                <option value="3">⭐⭐⭐ (3)</option>
+                <option value="2">⭐⭐ (2)</option>
+                <option value="1">⭐ (1)</option>
+            </select>
+        </div>
+
+        <button class="btn btn-success w-100">
+            ✔ Yorumu Gönder
+        </button>
+
+    </form>
+</div>

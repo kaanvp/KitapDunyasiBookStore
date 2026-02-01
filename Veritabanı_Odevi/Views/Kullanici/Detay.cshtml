@@ -1,0 +1,28 @@
+﻿@model Veritabani_Odevi.Models.Kullanici
+
+@{
+    ViewData["Title"] = "Kullanıcı Detayı";
+}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">Kullanıcı Detayı</h2>
+
+    <div class="card bg-dark text-white shadow p-4">
+        <h4>@Model.Ad @Model.Soyad</h4>
+        <hr />
+
+        <p><strong>E-posta:</strong> @Model.Eposta</p>
+        <p><strong>Telefon:</strong> @(string.IsNullOrEmpty(Model.Telefon) ? "-" : Model.Telefon)</p>
+        <p><strong>Adres:</strong> @(string.IsNullOrEmpty(Model.Adres) ? "-" : Model.Adres)</p>
+        <p><strong>Kayıt Tarihi:</strong> @Model.KayitTarihi.ToString("dd.MM.yyyy")</p>
+        <p><strong>Derece:</strong> @Model.Derecelendirme</p>
+        <p><strong>Rol:</strong> @Model.Rol</p>
+
+        <div class="mt-3">
+            <a asp-action="Duzenle" asp-route-id="@Model.KullaniciID" class="btn btn-warning">Düzenle</a>
+            <a asp-action="TumKullanicilar" class="btn btn-secondary ms-2">Geri Dön</a>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,916 @@
+﻿@section Styles {
+    <style>
+        :root {
+            --primary-color: #16202A;
+            --primary-light: #1E2A38;
+            --secondary-color: #3B82F6;
+            --accent-color: #F59E0B;
+            --success-color: #10B981;
+            --dark-color: #0F1419;
+            --light-gray: #1A2332;
+            --medium-gray: #374151;
+            --text-color: #F9FAFB;
+            --text-secondary: #D1D5DB;
+            --text-muted: #9CA3AF;
+            --border-color: #374151;
+            --card-bg: #1E2A38;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Ana Sayfa Stilleri */
+        .home-hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+            padding: 80px 20px;
+            color: var(--text-color);
+            text-align: center;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .home-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .home-hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            color: var(--text-secondary);
+        }
+
+        /* Kısayol Butonları Konteyner */
+        .shortcuts-container {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .shortcuts-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--text-color);
+            margin-bottom: 50px;
+            font-weight: 600;
+        }
+
+        .shortcuts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .shortcut-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            min-height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shortcut-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .shortcut-btn:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--secondary-color);
+            background: var(--primary-light);
+        }
+
+        .shortcut-btn:hover::before {
+            left: 100%;
+        }
+
+        .shortcut-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .shortcut-btn:hover .shortcut-icon {
+            transform: scale(1.1);
+        }
+
+        .shortcut-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* Renkli Butonlar */
+        .shortcut-btn.btn-kitap {
+            border-color: var(--accent-color);
+        }
+
+        .shortcut-btn.btn-kitap:hover {
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .shortcut-btn.btn-arama {
+            border-color: var(--secondary-color);
+        }
+
+        .shortcut-btn.btn-arama:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .shortcut-btn.btn-sepet {
+            border-color: var(--success-color);
+        }
+
+        .shortcut-btn.btn-sepet:hover {
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .shortcut-btn.btn-siparis {
+            border-color: var(--accent-color);
+        }
+
+        .shortcut-btn.btn-siparis:hover {
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .shortcut-btn.btn-hesap {
+            border-color: var(--secondary-color);
+        }
+
+        .shortcut-btn.btn-hesap:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .shortcut-btn.btn-rapor {
+            border-color: var(--success-color);
+        }
+
+        .shortcut-btn.btn-rapor:hover {
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .shortcut-btn.btn-kategori {
+            border-color: var(--accent-color);
+        }
+
+        .shortcut-btn.btn-kategori:hover {
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .shortcut-btn.btn-indirim {
+            border-color: var(--secondary-color);
+        }
+
+        .shortcut-btn.btn-indirim:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        /* Features Bölümü */
+        .features-section {
+            background: var(--primary-color);
+            padding: 60px 20px;
+            margin-top: 40px;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Book Slider Styles */
+        .book-slider-container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            position: relative;
+            overflow: hidden;
+            background: transparent;
+            background-size: cover;
+        }
+
+        .book-slider-track {
+            display: flex;
+            gap: 20px;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 20px 40px;
+        }
+
+        .book-slider-card {
+            min-width: 280px;
+            height: 420px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-lg);
+            transform-origin: center center;
+            border: 2px solid var(--border-color);
+        }
+
+            .book-slider-card img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .book-slider-card.active {
+                transform: scale(1.15);
+                z-index: 2;
+                box-shadow: var(--shadow-lg);
+                border-color: var(--secondary-color);
+            }
+
+            .book-slider-card:not(.active) {
+                opacity: 0.7;
+            }
+
+        .slider-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(59, 130, 246, 0.3);
+            border: 2px solid var(--secondary-color);
+            border-radius: 50%;
+            color: var(--text-color);
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .slider-nav-btn:hover {
+                background: rgba(59, 130, 246, 0.5);
+                box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+            }
+
+            .slider-nav-btn.prev {
+                left: 20px;
+            }
+
+            .slider-nav-btn.next {
+                right: 20px;
+            }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .slider-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+            .slider-dot.active {
+                background: var(--secondary-color);
+                transform: scale(1.2);
+                box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+            }
+
+        /* Book Categories Styles */
+        .book-categories {
+            background-color: var(--primary-color);
+        }
+
+        .book-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+            .book-card:hover {
+                transform: translateY(-8px);
+                box-shadow: var(--shadow-lg);
+                border-color: var(--secondary-color);
+            }
+
+        .book-card-inner {
+            position: relative;
+        }
+
+        .book-cover-container {
+            position: relative;
+            overflow: hidden;
+            height: 200px;
+            background: var(--light-gray);
+        }
+
+        .book-cover {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .book-card:hover .book-cover {
+            transform: scale(1.05);
+        }
+
+        .book-title {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .book-author {
+            font-size: 0.9em;
+            color: var(--text-muted);
+        }
+
+        .book-price {
+            font-size: 1.1em;
+            color: var(--success-color) !important;
+            font-weight: 700;
+        }
+
+        /* Responsive Design */
+        @@media (max-width: 1200px) {
+            .book-slider-card {
+                min-width: 240px;
+                height: 360px;
+            }
+        }
+
+        @@media (max-width: 768px) {
+            .book-slider-card {
+                min-width: 200px;
+                height: 300px;
+            }
+
+                .book-slider-card.active {
+                    transform: scale(1.1);
+                }
+
+            .book-slider-container {
+                padding: 40px 10px;
+            }
+        }
+
+        @@media (max-width: 480px) {
+            .book-slider-track {
+                gap: 10px;
+                padding: 10px;
+            }
+
+            .book-slider-card {
+                min-width: 160px;
+                height: 240px;
+            }
+
+            .slider-nav-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 20px;
+            }
+        }
+
+        /* Indirim Bölümü Stilleri */
+        .discount-banner {
+            background: linear-gradient(135deg, #EF4444 0%, #F59E0B 100%);
+            padding: 50px 20px;
+            border-radius: 12px;
+            margin-bottom: 60px;
+            color: var(--text-color);
+        }
+
+        .discount-banner h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .discount-banner p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+        }
+
+        .discount-banner .btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid var(--text-color);
+            color: var(--text-color);
+            padding: 12px 32px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .discount-banner .btn:hover {
+            background: var(--text-color);
+            color: #EF4444;
+        }
+    </style>
+}
+
+<!-- Main Content Area -->
+<main class="main-content">
+    <!-- Hero Section -->
+    <section class="home-hero">
+        <h1>Kitapların Büyülü Dünyasına Hoşgeldiniz</h1>
+        <p>Binlerce kitaptan kütüphanenizi oluşturun ve hikâyelerle yeninizi kaplayın</p>
+    </section>
+
+    <!-- Book Slider Section -->
+    <section class="book-slider-section">
+        <div class="book-slider-container">
+            <div class="book-slider-track">
+                <div class="book-slider-card">
+                    <img src="~/images/devrim-cagi.jpg" alt="Öne Çıkan Kitap 1">
+                </div>
+                <div class="book-slider-card">
+                    <img src="~/images/uzaycocugu.jpg" alt="Öne Çıkan Kitap 2">
+                </div>
+                <div class="book-slider-card">
+                    <img src="~/images/gocmenyildiz.jpg" alt="Öne Çıkan Kitap 3">
+                </div>
+                <div class="book-slider-card">
+                    <img src="~/images/shuggiebain.jpg" alt="Öne Çıkan Kitap 4">
+                </div>
+                <div class="book-slider-card">
+                    <img src="~/images/android-ruyalari.jpg" alt="Öne Çıkan Kitap 5">
+                </div>
+                <div class="book-slider-card">
+                    <img src="~/images/uzak-yildizlar.jpg" alt="Hayvan Çiftliği">
+                </div>
+                <div class="book-slider-card">
+                    <img src="~/images/book2.jpg" alt="Sefiller">
+                </div>
+                <div class="book-slider-card">
+                    <img src="~/images/yalnizlik-senfonisi.jpg" alt="Simyacı">
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <button class="slider-nav-btn prev">❮</button>
+            <button class="slider-nav-btn next">❯</button>
+
+            <!-- Indicators -->
+            <div class="slider-dots">
+                <span class="slider-dot active"></span>
+                <span class="slider-dot"></span>
+                <span class="slider-dot"></span>
+                <span class="slider-dot"></span>
+                <span class="slider-dot"></span>
+                <span class="slider-dot"></span>
+                <span class="slider-dot"></span>
+                <span class="slider-dot"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shortcuts Navigation Section -->
+    <section class="shortcuts-container">
+        <h2 class="shortcuts-title">Hızlı Erişim</h2>
+        <div class="shortcuts-grid">
+            @if (Context.Session.GetString("KullaniciRol") == "Admin")
+            {
+                <!-- Kitap İşlemleri Butonu -->
+                <a href="@Url.Action("Islemler", "Kitap")" class="shortcut-btn btn-kitap">
+                    <span class="shortcut-icon">📚</span>
+                    <span class="shortcut-text">Kitap İşlemleri</span>
+                </a>
+            }
+
+            <!-- Arama Butonu -->
+            <a href="@Url.Action("Ara", "Kitap")" class="shortcut-btn btn-arama">
+                <span class="shortcut-icon">🔍</span>
+                <span class="shortcut-text">Kitap Ara</span>
+            </a>
+
+            <!-- Sepet Butonu -->
+            <a href="@Url.Action("Index", "Sepet")" class="shortcut-btn btn-sepet">
+                <span class="shortcut-icon">🛒</span>
+                <span class="shortcut-text">Sepetim</span>
+            </a>
+
+            <!-- Siparişlerim Butonu -->
+            <a href="@Url.Action("Index", "Siparis")" class="shortcut-btn btn-siparis">
+                <span class="shortcut-icon">📦</span>
+                <span class="shortcut-text">Siparişlerim</span>
+            </a>
+
+            @if (Context.Session.GetString("KullaniciRol") == "Admin")
+            {
+                <!-- Hesap İşlemleri Butonu -->
+                <a href="@Url.Action("TumKullanicilar", "Kullanici")" class="shortcut-btn btn-hesap">
+                    <span class="shortcut-icon">👥</span>
+                    <span class="shortcut-text">Hesap İşlemleri</span>
+                </a>
+            }
+
+            @if (Context.Session.GetString("KullaniciRol") == "Admin")
+            {
+                <!-- Raporlar Butonu -->
+                <a href="@Url.Action("Index", "Rapor")" class="shortcut-btn btn-rapor">
+                    <span class="shortcut-icon">📊</span>
+                    <span class="shortcut-text">Raporlar</span>
+                </a>
+            }
+
+            <!-- Kategoriler Butonu -->
+            <a href="@Url.Action("KategoriListele", "Kategori")" class="shortcut-btn btn-kategori">
+                <span class="shortcut-icon">🏷️</span>
+                <span class="shortcut-text">Kategoriler</span>
+            </a>
+
+            @if (Context.Session.GetString("KullaniciRol") == "Admin")
+            {
+                <!-- İndirimler Butonu -->
+                <a href="@Url.Action("Islemler", "Indirim")" class="shortcut-btn btn-indirim">
+                    <span class="shortcut-icon">🎉</span>
+                    <span class="shortcut-text">İndirimler</span>
+                </a>
+            }
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Hızlı Teslimat</h3>
+                <p>Siparişleriniz güvenli ve hızlı şekilde adresinize ulaşır</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Güvenli Ödeme</h3>
+                <p>Tüm ödeme işlemleri şifreli ve güvenli ortamda gerçekleşir</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>Yorum & Puan</h3>
+                <p>Kitapları değerlendirin ve diğer okuyucuların fikirlerini okuyun</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎁</div>
+                <h3>Özel İndirimler</h3>
+                <p>Kapıştığınız kitapları özel indirimlerle satın alın</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Book Categories Section -->
+    <section class="book-categories py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-6 fw-bold">🔥 Aktif İndirimdeki Kitaplar</h2>
+                <p class="lead text-muted">Sınırlı süre için özel fiyatlarla kitaplarımızı keşfedin</p>
+                <a asp-controller="Indirim" asp-action="Aktif" class="btn btn-lg" style="background: linear-gradient(135deg, #EF4444, #F59E0B); color: white; border: none; font-weight: 600; margin-top: 15px;">
+                    Tüm İndirimleri Gör →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Book Categories Section -->
+    <section class="book-categories py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-6 fw-bold">Hikâyen Burda Başlıyor</h2>
+                <p class="lead text-muted">Farklı türlerden en sevilen kitapları keşfedin</p>
+            </div>
+
+            <!-- Category Tabs -->
+            <ul class="nav nav-pills justify-content-center mb-4" id="categoryTabs" role="tablist">
+                <li class="nav-item">
+                    <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#roman" type="button">Roman</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#bilim" type="button">Bilim</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tarih" type="button">Tarih</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#bilimkurgu" type="button">Bilimkurgu</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#fantastik" type="button">Fantastik</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#polisiye" type="button">Polisiye</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#ask" type="button">Aşk</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#kisiselgelisim" type="button">Kişisel Gelişim</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#biyografi" type="button">Biyografi</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#cocuk" type="button">Çocuk</button>
+                </li>
+            </ul>
+
+            <!-- Category Content -->
+            <div class="tab-content" id="categoryTabsContent">
+                <div class="tab-pane fade show active" id="roman">
+                    <div class="row g-4">
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="book-card h-100">
+                                <div class="book-card-inner">
+                                    <div class="book-cover-container">
+                                        <img src="~/images/book1.jpg" alt="Kitap 1" class="book-cover">
+                                    </div>
+                                    <div class="book-info p-3">
+                                        <h6 class="book-title mb-2">Roman Kitabı 1</h6>
+                                        <p class="book-author text-muted mb-2">Yazar Adı</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="book-price fw-bold text-success">50₺</span>
+                                            <button class="btn btn-outline-success btn-sm">Sepete Ekle</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Diğer roman kitapları buraya eklenebilir -->
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="bilim">
+                    <div class="row g-4">
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="book-card h-100">
+                                <div class="book-card-inner">
+                                    <div class="book-cover-container">
+                                        <img src="~/images/book2.jpg" alt="Kitap 2" class="book-cover">
+                                    </div>
+                                    <div class="book-info p-3">
+                                        <h6 class="book-title mb-2">Bilim Kitabı 1</h6>
+                                        <p class="book-author text-muted mb-2">Yazar Adı</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="book-price fw-bold text-success">75₺</span>
+                                            <button class="btn btn-outline-success btn-sm">Sepete Ekle</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Diğer bilim kitapları buraya eklenebilir -->
+                    </div>
+                </div>
+
+                <!-- Diğer kategoriler için tab-pane'ler buraya eklenebilir -->
+                <div class="tab-pane fade" id="tarih">
+                    <div class="row g-4">
+                        <div class="col-12 text-center">
+                            <p class="text-muted">Tarih kategorisindeki kitaplar yakında eklenecek...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="bilimkurgu">
+                    <div class="row g-4">
+                        <div class="col-12 text-center">
+                            <p class="text-muted">Bilimkurgu kategorisindeki kitaplar yakında eklenecek...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="fantastik">
+                    <div class="row g-4">
+                        <div class="col-12 text-center">
+                            <p class="text-muted">Fantastik kategorisindeki kitaplar yakında eklenecek...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="polisiye">
+                    <div class="row g-4">
+                        <div class="col-12 text-center">
+                            <p class="text-muted">Polisiye kategorisindeki kitaplar yakında eklenecek...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="ask">
+                    <div class="row g-4">
+                        <div class="col-12 text-center">
+                            <p class="text-muted">Aşk kategorisindeki kitaplar yakında eklenecek...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="kisiselgelisim">
+                    <div class="row g-4">
+                        <div class="col-12 text-center">
+                            <p class="text-muted">Kişisel Gelişim kategorisindeki kitaplar yakında eklenecek...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="biyografi">
+                    <div class="row g-4">
+                        <div class="col-12 text-center">
+                            <p class="text-muted">Biyografi kategorisindeki kitaplar yakında eklenecek...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="cocuk">
+                    <div class="row g-4">
+                        <div class="col-12 text-center">
+                            <p class="text-muted">Çocuk kategorisindeki kitaplar yakında eklenecek...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const track = document.querySelector('.book-slider-track');
+            const cards = Array.from(document.querySelectorAll('.book-slider-card'));
+            const dots = Array.from(document.querySelectorAll('.slider-dot'));
+            const prevBtn = document.querySelector('.slider-nav-btn.prev');
+            const nextBtn = document.querySelector('.slider-nav-btn.next');
+
+            let currentIndex = 0;
+            let interval;
+            const autoplayDelay = 3000;
+
+            // İlk kartı aktif et
+            if (cards.length > 0) {
+                cards[0].classList.add('active');
+            }
+
+            function updateSlider(index) {
+                if (cards.length === 0) return;
+
+                // Aktif kartı güncelle
+                cards.forEach(card => card.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
+
+                cards[index].classList.add('active');
+                if (dots[index]) {
+                    dots[index].classList.add('active');
+                }
+
+                // Slider'ı kaydır
+                const cardWidth = cards[0].offsetWidth;
+                const gap = 20;
+                const offset = -(index * (cardWidth + gap));
+                const centerOffset = (track.parentElement.offsetWidth - cardWidth) / 2;
+
+                track.style.transform = `translateX(${offset + centerOffset}px)`;
+                currentIndex = index;
+            }
+
+            function nextSlide() {
+                const next = (currentIndex + 1) % cards.length;
+                updateSlider(next);
+            }
+
+            function prevSlide() {
+                const prev = (currentIndex - 1 + cards.length) % cards.length;
+                updateSlider(prev);
+            }
+
+            // Autoplay kontrolü
+            function startAutoplay() {
+                if (cards.length > 1) {
+                    interval = setInterval(nextSlide, autoplayDelay);
+                }
+            }
+
+            function stopAutoplay() {
+                clearInterval(interval);
+            }
+
+            // Event listeners
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    prevSlide();
+                    stopAutoplay();
+                    startAutoplay();
+                });
+            }
+
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    nextSlide();
+                    stopAutoplay();
+                    startAutoplay();
+                });
+            }
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    updateSlider(index);
+                    stopAutoplay();
+                    startAutoplay();
+                });
+            });
+
+            // Her karta tıklama özelliği
+            cards.forEach((card, index) => {
+                card.addEventListener('click', () => {
+                    updateSlider(index);
+                    stopAutoplay();
+                    startAutoplay();
+                });
+            });
+
+            // Hover pause
+            if (track) {
+                track.addEventListener('mouseenter', stopAutoplay);
+                track.addEventListener('mouseleave', startAutoplay);
+            }
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    prevSlide();
+                    stopAutoplay();
+                    startAutoplay();
+                } else if (e.key === 'ArrowRight') {
+                    nextSlide();
+                    stopAutoplay();
+                    startAutoplay();
+                }
+            });
+
+            // İlk görünümü ayarla
+            updateSlider(0);
+            startAutoplay();
+
+            // Pencere boyutu değiştiğinde yeniden konumlandır
+            window.addEventListener('resize', () => {
+                updateSlider(currentIndex);
+            });
+        });
+    </script>
+}

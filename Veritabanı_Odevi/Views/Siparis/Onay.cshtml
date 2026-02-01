@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Sipariş Onayı";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 text-center p-5">
+        <h2 class="fw-bold text-success mb-3">
+            ✅ Siparişiniz Alındı
+        </h2>
+
+        <p class="fs-5 mb-4">
+            Siparişiniz başarıyla oluşturuldu.
+            En kısa sürede hazırlanıp kargoya verilecektir.
+        </p>
+
+        <div class="d-flex justify-content-center gap-3">
+            <a asp-controller="Siparis"
+               asp-action="Index"
+               class="btn btn-primary btn-lg px-4">
+                📦 Siparişlerim
+            </a>
+
+            <a asp-controller="Kitap"
+               asp-action="Index"
+               class="btn btn-outline-secondary btn-lg px-4">
+                📚 Alışverişe Devam Et
+            </a>
+        </div>
+    </div>
+</div>

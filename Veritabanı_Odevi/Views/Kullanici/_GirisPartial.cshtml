@@ -1,0 +1,24 @@
+﻿@model Veritabani_Odevi.Models.ViewModels.GirisViewModel
+
+<form asp-controller="Kullanici" asp-action="Giris" method="post">
+    <h2>Giriş Yap</h2>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <input asp-for="Email" placeholder="E-posta Adresi" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input asp-for="Password" type="password" placeholder="Şifre" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <div class="checkbox">
+        <input asp-for="RememberMe" />
+        <label asp-for="RememberMe"></label>
+    </div>
+
+    <button type="submit" class="submit-btn">Giriş Yap</button>
+</form>

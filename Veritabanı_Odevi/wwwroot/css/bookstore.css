@@ -1,0 +1,198 @@
+﻿/* wwwroot/css/bookstore.css - DÜZENLENMİŞ VERSİYON */
+/* Sadece gerekli sınıflar - Mevcut projenizle uyumlu */
+
+/* Global Variables - Dark Theme */
+:root {
+    --primary-color: #16202A;
+    --primary-light: #1E2A38;
+    --secondary-color: #3B82F6;
+    --accent-color: #F59E0B;
+    --success-color: #10B981;
+    --dark-color: #0F1419;
+    --light-gray: #1A2332;
+    --medium-gray: #374151;
+    --text-color: #F9FAFB;
+    --text-secondary: #D1D5DB;
+    --text-muted: #9CA3AF;
+    --border-color: #374151;
+    --card-bg: #1E2A38;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+/* Mevcut projenize eklemek için */
+.bg-dark-theme {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--dark-color) 100%) !important;
+}
+
+/* Header Styles - Navbar için */
+.custom-navbar {
+    background: rgba(22, 32, 42, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+.custom-nav-link {
+    color: var(--text-secondary) !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+    .custom-nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 50%;
+        background-color: var(--secondary-color);
+        transition: all 0.3s ease;
+    }
+
+    .custom-nav-link:hover {
+        color: var(--text-color) !important;
+    }
+
+        .custom-nav-link:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+/* Book Card - Genel Kitap Kartı */
+.book-card-custom {
+    background: var(--card-bg) !important;
+    border-radius: 15px !important;
+    overflow: hidden;
+    box-shadow: var(--shadow) !important;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color) !important;
+}
+
+    .book-card-custom:hover {
+        transform: translateY(-5px) !important;
+        box-shadow: var(--shadow-lg) !important;
+        border-color: var(--secondary-color) !important;
+    }
+
+.book-card-inner {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.book-cover-container {
+    position: relative;
+    overflow: hidden;
+    height: 250px;
+    background: var(--light-gray);
+}
+
+.book-cover-custom {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+}
+
+.book-card-custom:hover .book-cover-custom {
+    transform: scale(1.1);
+}
+
+.book-info-custom {
+    flex: 1;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.book-title-custom {
+    font-weight: 600 !important;
+    color: var(--text-color) !important;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.book-author-custom {
+    font-size: 0.9em !important;
+    color: var(--text-muted) !important;
+}
+
+.book-price-custom {
+    font-size: 1.1em !important;
+    color: var(--success-color) !important;
+    font-weight: 600 !important;
+}
+
+/* Butonlar */
+.btn-custom-primary {
+    background-color: var(--secondary-color) !important;
+    border-color: var(--secondary-color) !important;
+    color: white !important;
+}
+
+    .btn-custom-primary:hover {
+        background-color: var(--accent-color) !important;
+        border-color: var(--accent-color) !important;
+    }
+
+.btn-custom-outline {
+    border-color: var(--secondary-color) !important;
+    color: var(--secondary-color) !important;
+}
+
+    .btn-custom-outline:hover {
+        background-color: var(--secondary-color) !important;
+        border-color: var(--secondary-color) !important;
+        color: white !important;
+    }
+
+/* Footer */
+.footer-dark-custom {
+    background: linear-gradient(135deg, var(--dark-color) 0%, var(--primary-color) 100%) !important;
+    color: var(--text-color) !important;
+}
+
+.footer-link-custom {
+    color: var(--text-muted) !important;
+    text-decoration: none !important;
+    transition: all 0.3s ease !important;
+}
+
+    .footer-link-custom:hover {
+        color: var(--secondary-color) !important;
+        transform: translateX(5px) !important;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .book-cover-container {
+        height: 200px;
+    }
+
+    .book-card-custom:hover {
+        transform: translateY(-3px) !important;
+    }
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: var(--light-gray);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 4px;
+}
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: var(--accent-color);
+    }

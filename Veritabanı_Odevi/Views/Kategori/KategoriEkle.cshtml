@@ -1,0 +1,68 @@
+﻿@model Veritabani_Odevi.Models.Kategori
+
+@{
+    ViewData["Title"] = "Kategori Ekle";
+}
+
+<style>
+    body {
+        background-color: #16202A;
+        color: #fff;
+    }
+
+    .card {
+        background-color: #1D2936;
+        border: none;
+    }
+
+    label {
+        color: #ddd;
+    }
+
+    input, select {
+        background-color: #0F1620 !important;
+        color: #fff !important;
+        border: 1px solid #2A3A4D;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow-lg">
+                <div class="card-header">
+                    <h4>➕ Yeni Kategori Ekle</h4>
+                </div>
+
+                <div class="card-body">
+                    <form asp-action="KategoriEkle" method="post">
+
+                        <div class="mb-3">
+                            <label>Kategori Adı</label>
+                            <input asp-for="KategoriAdi" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Üst Kategori</label>
+                            <select asp-for="UstKategoriID" class="form-select">
+                                <option value="">Üst kategori yok</option>
+                                @foreach (var k in ViewBag.Kategoriler)
+                                {
+                                    <option value="@k.KategoriID">@k.KategoriAdi</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="KategoriListele" class="btn btn-outline-light">İptal</a>
+                            <button class="btn btn-success">Kaydet</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,412 @@
+﻿@using Veritabani_Odevi.Models
+@model List<Veritabani_Odevi.DTOs.KitapListeDTO>
+
+@{
+    ViewData["Title"] = "Kitap Ara";
+}
+
+<style>
+    :root {
+        --primary-color: #16202A;
+        --primary-light: #1E2A38;
+        --secondary-color: #3B82F6;
+        --accent-color: #F59E0B;
+        --success-color: #10B981;
+        --danger-color: #EF4444;
+        --dark-color: #0F1419;
+        --light-gray: #1A2332;
+        --medium-gray: #374151;
+        --text-color: #F9FAFB;
+        --text-secondary: #D1D5DB;
+        --text-muted: #9CA3AF;
+        --border-color: #374151;
+        --card-bg: #1E2A38;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--primary-color);
+    }
+
+    .book-card {
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all .3s ease;
+        box-shadow: var(--shadow);
+        background: var(--card-bg);
+        position: relative;
+        border: 1px solid var(--border-color);
+    }
+
+        .book-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--secondary-color);
+        }
+
+    .book-img-wrapper {
+        height: 240px;
+        background: var(--light-gray);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .book-img-wrapper img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            transition: transform .3s ease;
+        }
+
+    .book-card:hover img {
+        transform: scale(1.05);
+    }
+
+    .book-body {
+        padding: 15px;
+    }
+
+    .book-title {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 4px;
+    }
+
+    .book-author {
+        font-size: .9rem;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+    }
+
+    .book-price {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--success-color);
+    }
+
+    .original-price {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        text-decoration: line-through;
+    }
+
+    .discount-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: var(--danger-color);
+        color: var(--text-color);
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        z-index: 10;
+    }
+
+    .action-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(22,32,42,.85);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity .3s ease;
+        padding: 15px;
+    }
+
+    .book-card:hover .action-overlay {
+        opacity: 1;
+    }
+
+    .action-overlay .btn-group {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+        max-width: 220px;
+    }
+
+    .action-overlay a,
+    .action-overlay button,
+    .action-overlay form {
+        width: 100%;
+    }
+
+    .action-overlay button,
+    .action-overlay a {
+        border-radius: 8px;
+        padding: 12px 20px;
+        font-weight: 600;
+        border: none;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        font-size: 0.95rem;
+    }
+
+    .action-overlay .btn-success {
+        background: var(--success-color);
+        color: var(--dark-color);
+    }
+
+    .action-overlay .btn-success:hover {
+        background: #059669;
+        color: var(--text-color);
+    }
+
+    .action-overlay .btn-info {
+        background: transparent;
+        border: 2px solid var(--text-color);
+        color: var(--text-color);
+    }
+
+    .action-overlay .btn-info:hover {
+        background: var(--secondary-color);
+        border-color: var(--secondary-color);
+        color: var(--text-color);
+    }
+
+    .search-card {
+        background: var(--card-bg);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        margin-bottom: 30px;
+        border: 1px solid var(--border-color);
+    }
+
+    .search-card-header {
+        background: var(--light-gray);
+        padding: 20px;
+        border-radius: 12px 12px 0 0;
+        color: var(--text-color);
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .search-card-header h5 {
+        margin-bottom: 0;
+        font-weight: 600;
+    }
+
+    .search-card-body {
+        padding: 20px;
+    }
+
+    .form-control, .form-select {
+        background: var(--light-gray);
+        border: 1px solid var(--border-color);
+        color: var(--text-color);
+    }
+
+    .form-control:focus, .form-select:focus {
+        background: var(--light-gray);
+        border-color: var(--secondary-color);
+        color: var(--text-color);
+        box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+    }
+
+    .form-control::placeholder {
+        color: var(--text-muted);
+    }
+
+    .form-label {
+        color: var(--text-color);
+    }
+
+    .form-check-input {
+        background: var(--light-gray);
+        border: 1px solid var(--border-color);
+    }
+
+    .form-check-input:checked {
+        background: var(--secondary-color);
+        border-color: var(--secondary-color);
+    }
+
+    .form-check-label {
+        color: var(--text-color);
+    }
+
+    .btn-primary {
+        background: var(--secondary-color);
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background: #2563EB;
+    }
+
+    .results-title {
+        color: var(--text-color);
+        font-weight: 600;
+    }
+
+    .alert {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        color: var(--text-secondary);
+    }
+
+    .alert h5 {
+        color: var(--text-color);
+    }
+
+    .alert p {
+        color: var(--text-muted);
+    }
+
+    .alert a {
+        color: var(--secondary-color);
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="search-card">
+        <div class="search-card-header">
+            <h5 class="mb-0">🔍 Gelişmiş Arama</h5>
+        </div>
+        <div class="search-card-body">
+            <form asp-action="Ara" method="get">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <input type="text" name="aramaKelimesi" class="form-control"
+                               placeholder="Kitap adı, yazar, açıklama..."
+                               value="@ViewBag.AramaKelimesi">
+                    </div>
+
+                    <div class="col-md-3">
+                        <input type="number" name="minFiyat" class="form-control"
+                               placeholder="Min fiyat" step="0.01" value="@ViewBag.MinFiyat">
+                    </div>
+
+                    <div class="col-md-3">
+                        <input type="number" name="maxFiyat" class="form-control"
+                               placeholder="Max fiyat" step="0.01" value="@ViewBag.MaxFiyat">
+                    </div>
+
+                    <div class="col-md-4">
+                        <select name="durum" class="form-select">
+                            <option value="">Tüm Durumlar</option>
+                            <option value="Yeni">Sıfır</option>
+                            <option value="CokIyi">Çok İyi</option>
+                            <option value="Iyi">İyi</option>
+                            <option value="Orta">Orta</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <select name="siralama" class="form-select">
+                            <option value="YenidenEskiye">Yeniden Eskiye</option>
+                            <option value="EskidenYeniye">Eskiden Yeniye</option>
+                            <option value="FiyatArtan">Fiyat (Artan)</option>
+                            <option value="FiyatAzalan">Fiyat (Azalan)</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary w-100">
+                            🔍 Ara
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <label class="form-label">Kategoriler:</label>
+                        <div class="d-flex flex-wrap gap-2">
+                            @foreach (var kat in ViewBag.Kategoriler as List<Kategori>)
+                            {
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox"
+                                           name="kategoriler" value="@kat.KategoriID"
+                                           id="k@kat.KategoriID">
+                                    <label class="form-check-label" for="k@kat.KategoriID">
+                                        @kat.KategoriAdi
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <h4 class="results-title mb-4">📖 Sonuçlar (@Model.Count kitap bulundu)</h4>
+    <div class="row g-4">
+        @if (Model.Count > 0)
+        {
+            @foreach (var book in Model)
+            {
+                <div class="col-md-3">
+                    <div class="book-card h-100">
+
+                        @if (book.IndirimVar)
+                        {
+                            <div class="discount-badge">
+                                %@book.IndirimOrani İndirim
+                            </div>
+                        }
+
+                        <div class="book-img-wrapper">
+                            <img src="@book.KapakResmiUrl" alt="@book.Baslik" />
+                        </div>
+
+                        <div class="book-body">
+                            <div class="book-title">@book.Baslik</div>
+                            <div class="book-author">@book.Yazar</div>
+                            
+                            @if (book.IndirimVar)
+                            {
+                                <div class="d-flex flex-column">
+                                    <span class="original-price">@book.OrijinalFiyat.ToString("C2")</span>
+                                    <span class="book-price">@book.IndirimliFiyat.ToString("C2")</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="book-price">@book.IndirimliFiyat.ToString("C2")</div>
+                            }
+                        </div>
+
+                        <!-- İşlemler Overlay -->
+                        <div class="action-overlay">
+                            <div class="btn-group">
+                                <!-- Sepete Ekle -->
+                                <form asp-action="SepeteEkle" asp-controller="Sepet" method="post" style="margin: 0;">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="kitapID" value="@book.KitapID" />
+                                    <input type="hidden" name="adet" value="1" />
+                                    <button type="submit" class="btn btn-success">
+                                        🛒 Sepete Ekle
+                                    </button>
+                                </form>
+
+                                <!-- Detay & Yorumlar -->
+                                <a asp-action="Detay"
+                                   asp-route-id="@book.KitapID"
+                                   class="btn btn-info">
+                                    💬 Detay & Yorumlar
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <div class="alert alert-info text-center py-5">
+                    <h5>Kitap bulunamadı</h5>
+                    <p>Lütfen arama kriterlerinizi değiştirebilir veya @Html.ActionLink("tüm kitapları görüntüleyebilirsiniz.", "KitapListele")</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>

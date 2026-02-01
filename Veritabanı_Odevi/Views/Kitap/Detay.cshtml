@@ -1,0 +1,188 @@
+﻿@model Veritabani_Odevi.Models.Kitap
+@using Veritabani_Odevi.Models
+
+@{
+    ViewData["Title"] = Model.Baslik;
+}
+
+<style>
+    .detail-card,
+    .detail-card p,
+    .detail-card span,
+    .detail-card b,
+    .detail-card div {
+        color: #212529 !important;
+    }
+
+    .comment-card,
+    .comment-card p {
+        color: #212529 !important;
+    }
+
+    .detail-card {
+        border-radius: 14px;
+        box-shadow: 0 6px 18px rgba(0,0,0,.1);
+        background: #fff;
+        padding: 25px;
+    }
+
+    .detail-img {
+        height: 360px;
+        background: #f1f1f1;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .detail-img img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+    .detail-title {
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-bottom: 6px;
+    }
+
+    .detail-author {
+        color: #666;
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+
+    .detail-price {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #e44d26;
+        margin-bottom: 10px;
+    }
+
+    .detail-desc {
+        color: #444;
+        line-height: 1.6;
+        margin-top: 15px;
+    }
+
+    .comment-card {
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,.08);
+    }
+
+    .comment-title {
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    .comment-date {
+        font-size: .8rem;
+        color: #888;
+    }
+</style>
+
+<div class="container mt-5">
+
+    @if (TempData["YorumMesaj"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>@TempData["YorumMesaj"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["YorumHata"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>@TempData["YorumHata"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- KİTAP DETAY -->
+    <div class="row mb-4">
+        <div class="col-md-5">
+            <div class="detail-img">
+                <img src="@Model.KapakResmiUrl" alt="@Model.Baslik" />
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <div class="detail-card">
+                <div class="detail-title">@Model.Baslik</div>
+                <div class="detail-author">@Model.Yazar</div>
+
+                <div class="detail-price">@Model.Fiyat.ToString("C2")</div>
+
+                <p><b>Durum:</b> @Model.Durum</p>
+                <p><b>Stok:</b> @Model.StokAdedi</p>
+
+                <p class="detail-desc">
+                    @Model.Aciklama
+                </p>
+
+                <form asp-controller="Sepet" asp-action="SepeteEkle" method="post">
+                    <input type="hidden" name="kitapId" value="@Model.KitapID" />
+                    <button class="btn btn-success btn-lg mt-3">
+                        🛒 Sepete Ekle
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- YORUMLAR -->
+    <div class="row">
+        <div class="col-md-12">
+
+            <h4 class="mb-3">💬 Kullanıcı Yorumları</h4>
+
+            @if (ViewBag.Yorumlar != null && ((List<Yorum>)ViewBag.Yorumlar).Any())
+            {
+                foreach (var yorum in (List<Yorum>)ViewBag.Yorumlar)
+                {
+                    <div class="card comment-card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div class="comment-title">
+                                    @(!string.IsNullOrEmpty(yorum.Baslik) ? yorum.Baslik : "Yorum")
+                                </div>
+                                <div class="comment-date">
+                                    @yorum.YorumTarihi.ToString("dd.MM.yyyy")
+                                </div>
+                            </div>
+
+                            <p class="mt-2">@yorum.Icerik</p>
+
+                            <div class="text-warning">
+                                ⭐ @yorum.Puan / 5
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p class="text-muted">Bu kitap için henüz yorum yapılmamış.</p>
+            }
+        </div>
+    </div>
+
+    <!-- YORUM EKLE (PARTIAL VIEW) -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+
+            @await Html.PartialAsync(
+            "_YorumEkle",
+                        new Yorum
+                        {
+                            KitapID = Model.KitapID,
+                            KullaniciID = ViewBag.KullaniciID ?? 0
+                        }
+                        )
+
+        </div>
+    </div>
+
+</div>

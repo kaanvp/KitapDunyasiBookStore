@@ -1,0 +1,288 @@
+﻿@model List<Veritabani_Odevi.DTOs.IndirimdekiKitapDTO>
+
+@{
+    ViewData["Title"] = "İndirimdeki Kitaplar";
+}
+
+<style>
+    :root {
+        --primary-color: #16202A;
+        --primary-light: #1E2A38;
+        --secondary-color: #3B82F6;
+        --accent-color: #F59E0B;
+        --success-color: #10B981;
+        --danger-color: #EF4444;
+        --dark-color: #0F1419;
+        --light-gray: #1A2332;
+        --medium-gray: #374151;
+        --text-color: #F9FAFB;
+        --text-secondary: #D1D5DB;
+        --text-muted: #9CA3AF;
+        --border-color: #374151;
+        --card-bg: #1E2A38;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+    }
+
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--primary-color);
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, var(--danger-color) 0%, var(--accent-color) 100%);
+        padding: 40px 20px;
+        border-radius: 12px;
+        margin-bottom: 40px;
+        text-align: center;
+        color: var(--text-color);
+    }
+
+    .page-header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    .page-header p {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        margin: 0;
+    }
+
+    .discount-card {
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all .3s ease;
+        box-shadow: var(--shadow);
+        background: var(--card-bg);
+        position: relative;
+        border: 1px solid var(--border-color);
+    }
+
+        .discount-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-color);
+        }
+
+    .discount-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: linear-gradient(135deg, var(--danger-color), var(--accent-color));
+        color: var(--text-color);
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        z-index: 10;
+        box-shadow: var(--shadow);
+    }
+
+    .book-img-wrapper {
+        height: 240px;
+        background: var(--light-gray);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .book-img-wrapper img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            transition: transform .3s ease;
+        }
+
+    .discount-card:hover img {
+        transform: scale(1.05);
+    }
+
+    .book-body {
+        padding: 15px;
+    }
+
+    .book-title {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 4px;
+    }
+
+    .book-author {
+        font-size: .9rem;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+    }
+
+    .price-section {
+        margin: 12px 0;
+    }
+
+    .original-price {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        text-decoration: line-through;
+    }
+
+    .discount-price {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--accent-color);
+    }
+
+    .end-date {
+        font-size: 0.85rem;
+        color: var(--danger-color);
+        font-weight: 600;
+        margin-top: 8px;
+    }
+
+    .action-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(22,32,42,.85);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity .3s ease;
+        padding: 15px;
+    }
+
+    .discount-card:hover .action-overlay {
+        opacity: 1;
+    }
+
+    .action-overlay .btn-group {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+        max-width: 220px;
+    }
+
+    .action-overlay button,
+    .action-overlay a {
+        border-radius: 8px;
+        padding: 12px 20px;
+        font-weight: 600;
+        border: none;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        font-size: 0.95rem;
+        width: 100%;
+    }
+
+    .action-overlay .btn-success {
+        background: var(--success-color);
+        color: var(--dark-color);
+    }
+
+    .action-overlay .btn-success:hover {
+        background: #059669;
+        color: var(--text-color);
+    }
+
+    .action-overlay .btn-outline-light {
+        background: transparent;
+        border: 2px solid var(--text-color);
+        color: var(--text-color);
+    }
+
+    .action-overlay .btn-outline-light:hover {
+        background: var(--secondary-color);
+        border-color: var(--secondary-color);
+        color: var(--text-color);
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+    }
+
+    .empty-state h4 {
+        color: var(--text-color);
+        margin-bottom: 10px;
+    }
+
+    .empty-state p {
+        color: var(--text-muted);
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="page-header">
+        <h1>🔥 Aktif İndirimdeki Kitaplar</h1>
+        <p>Sınırlı süre için özel fiyatlarla kitaplarımızı keşfedin</p>
+    </div>
+
+    @if (Model.Count > 0)
+    {
+        <div class="row g-4">
+            @foreach (var kitap in Model)
+            {
+                <div class="col-md-3">
+                    <div class="discount-card h-100">
+
+                        <div class="discount-badge">
+                            %@kitap.IndirimOrani
+                        </div>
+
+                        <div class="book-img-wrapper">
+                            <img src="@kitap.KapakResmiUrl" alt="@kitap.Baslik" />
+                        </div>
+
+                        <div class="book-body">
+                            <div class="book-title">@kitap.Baslik</div>
+                            <div class="book-author">@kitap.Yazar</div>
+
+                            <div class="price-section">
+                                <div class="original-price">@kitap.OrijinalFiyat.ToString("C2")</div>
+                                <div class="discount-price">@kitap.IndirimliFiyat.ToString("C2")</div>
+                            </div>
+
+                            <div class="end-date">
+                                ⏳ @kitap.BitisTarihi.ToString("dd.MM.yyyy") tarihine kadar
+                            </div>
+                        </div>
+
+                        <div class="action-overlay">
+                            <div class="btn-group">
+                                <!-- Sepete Ekle -->
+                                <form asp-action="SepeteEkle" asp-controller="Sepet" method="post" style="margin: 0;">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="kitapID" value="@kitap.KitapID" />
+                                    <input type="hidden" name="adet" value="1" />
+                                    <button type="submit" class="btn btn-success">
+                                        🛒 Sepete Ekle
+                                    </button>
+                                </form>
+
+                                <!-- Detay & Yorumlar -->
+                                <a asp-controller="Kitap"
+                                   asp-action="Detay"
+                                   asp-route-id="@kitap.KitapID"
+                                   class="btn btn-outline-light">
+                                    💬 Detay & Yorumlar
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="empty-state">
+            <h4>Aktif indirim bulunmamaktadır</h4>
+            <p>Daha sonra tekrar kontrol edin</p>
+        </div>
+    }
+</div>

@@ -1,0 +1,280 @@
+﻿@model IEnumerable<Veritabani_Odevi.Models.Kategori>
+
+@{
+    ViewData["Title"] = "Kategoriler";
+    var isAdmin = Context.Session.GetString("KullaniciRol") == "Admin";
+    
+    // Tema renklerine uygun ikon ve kenar renkleri (Sade ve profesyonel)
+    var categoryStyles = new[] {
+        new { Icon = "fas fa-book", Border = "#3B82F6" },      // Mavi (Primary)
+        new { Icon = "fas fa-book-open", Border = "#F59E0B" }, // Sarı (Accent)
+        new { Icon = "fas fa-bookmark", Border = "#10B981" },  // Yeşil (Success)
+        new { Icon = "fas fa-feather-alt", Border = "#8B5CF6" }, // Mor
+        new { Icon = "fas fa-pen-fancy", Border = "#EC4899" }, // Pembe
+        new { Icon = "fas fa-university", Border = "#6366F1" }, // İndigo
+        new { Icon = "fas fa-globe", Border = "#14B8A6" },      // Teal
+        new { Icon = "fas fa-atlas", Border = "#F97316" }       // Turuncu
+    };
+    int styleIndex = 0;
+}
+
+<style>
+    .categories-section {
+        padding: 2rem 0;
+    }
+
+    .page-title-section {
+        margin-bottom: 2.5rem;
+        border-bottom: 1px solid #374151;
+        padding-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .page-title-section h1 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #F9FAFB;
+        margin: 0;
+    }
+
+    .page-title-section p {
+        color: #9CA3AF;
+        margin: 0;
+        font-size: 0.95rem;
+    }
+
+    /* Kategori Kartları - Temaya Uygun Sade Tasarım */
+    .category-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+    }
+
+    .theme-card {
+        background-color: #1E2A38;
+        border: 1px solid #374151;
+        border-radius: 8px;
+        padding: 20px;
+        transition: all 0.2s ease-in-out;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        text-decoration: none;
+    }
+
+    .theme-card:hover {
+        transform: translateY(-4px);
+        border-color: #4B5563;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        background-color: #233040;
+    }
+
+    /* Sol tarafta ince renkli çizgi */
+    .theme-card::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background-color: var(--accent-color, #3B82F6);
+    }
+
+    .card-header-flex {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    .cat-icon {
+        width: 45px;
+        height: 45px;
+        background-color: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: var(--accent-color, #3B82F6);
+        transition: all 0.3s ease;
+    }
+
+    .theme-card:hover .cat-icon {
+        background-color: var(--accent-color, #3B82F6);
+        color: white;
+    }
+
+    .cat-title {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #F9FAFB;
+        margin: 0;
+    }
+
+    .card-actions {
+        margin-top: auto;
+        padding-top: 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-action-sm {
+        flex: 1;
+        font-size: 0.8rem;
+        padding: 6px 12px;
+        border-radius: 4px;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.2s;
+        border: 1px solid transparent;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        cursor: pointer;
+    }
+
+    .btn-view {
+        background-color: rgba(59, 130, 246, 0.1);
+        color: #60A5FA;
+        border-color: rgba(59, 130, 246, 0.2);
+    }
+
+    .btn-view:hover {
+        background-color: #3B82F6;
+        color: white;
+    }
+
+    .btn-edit-theme {
+        background-color: rgba(245, 158, 11, 0.1);
+        color: #FBBF24;
+        border-color: rgba(245, 158, 11, 0.2);
+    }
+
+    .btn-edit-theme:hover {
+        background-color: #F59E0B;
+        color: black;
+    }
+
+    .btn-delete-theme {
+        background-color: rgba(239, 68, 68, 0.1);
+        color: #F87171;
+        border-color: rgba(239, 68, 68, 0.2);
+        width: 100%;
+        border: none;
+    }
+
+    .btn-delete-theme:hover {
+        background-color: #EF4444;
+        color: white;
+    }
+
+    .btn-add-new {
+        background-color: #10B981;
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: background-color 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-add-new:hover {
+        background-color: #059669;
+        color: white;
+    }
+
+    .empty-state-theme {
+        background-color: #1E2A38;
+        border: 1px dashed #374151;
+        border-radius: 8px;
+        padding: 3rem;
+        text-align: center;
+        color: #9CA3AF;
+    }
+</style>
+
+<div class="categories-section">
+    <!-- Başlık Alanı -->
+    <div class="page-title-section">
+        <div>
+            <h1>Kategoriler</h1>
+            <p>Kitap koleksiyonumuzu kategorilere göre inceleyin</p>
+        </div>
+        
+        @if (isAdmin)
+        {
+            <a href="@Url.Action("KategoriEkle", "Kategori")" class="btn-add-new">
+                <i class="fas fa-plus"></i> Yeni Kategori
+            </a>
+        }
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="category-grid">
+            @foreach (var category in Model)
+            {
+                // Döngüsel stil seçimi
+                var style = categoryStyles[styleIndex % categoryStyles.Length];
+                styleIndex++;
+
+                <!-- Tüm Kart Linki -->
+                <div class="theme-card" style="--accent-color: @style.Border;">
+                    <!-- Kart Başlığı ve İkon -->
+                    <div class="card-header-flex">
+                        <div class="cat-icon">
+                            <i class="@style.Icon"></i>
+                        </div>
+                        <h3 class="cat-title">@category.KategoriAdi</h3>
+                    </div>
+
+                    <!-- Butonlar -->
+                    <div class="card-actions">
+                        <!-- İncele Butonu (Herkes için) -->
+                        <a href="@Url.Action("Ara", "Kitap", new { kategoriler = category.KategoriID })" class="btn-action-sm btn-view">
+                            <i class="fas fa-arrow-right"></i> İncele
+                        </a>
+
+                        <!-- Admin Butonları -->
+                        @if (isAdmin)
+                        {
+                            <a href="@Url.Action("KategoriGuncelle", "Kategori", new { id = category.KategoriID })" class="btn-action-sm btn-edit-theme">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                            <div style="flex: 1;">
+                                <form asp-action="KategoriSil" asp-controller="Kategori" method="post" style="height: 100%;">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@category.KategoriID" />
+                                    <button type="submit" class="btn-action-sm btn-delete-theme" onclick="return confirm('Bu kategoriyi silmek istediğinizden emin misiniz?');">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="empty-state-theme">
+            <i class="fas fa-folder-open fa-3x mb-3"></i>
+            <h3>Kategori Bulunamadı</h3>
+            <p>Henüz sistemde kayıtlı bir kategori bulunmamaktadır.</p>
+        </div>
+    }
+</div>

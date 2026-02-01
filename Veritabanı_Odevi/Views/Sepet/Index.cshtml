@@ -1,0 +1,222 @@
+﻿@model List<Veritabani_Odevi.Models.ViewModels.SepetElemaniViewModel>
+
+@{
+    ViewData["Title"] = "Sepetim";
+    decimal toplamTutar = Model.Sum(x => x.IndirimliFiyat * x.Adet);
+    decimal toplamindirimliTutar = Model.Sum(x => x.OrijinalFiyat * x.Adet);
+    decimal kazanilanIndirim = toplamindirimliTutar - toplamTutar;
+}
+
+<div class="container mt-5">
+
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i> @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i> @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <h2 class="mb-4 text-white fw-bold">
+        🛒 Sepetim
+    </h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning shadow-sm">
+            <strong>Sepetiniz boş.</strong> Alışverişe devam edebilirsiniz.
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-lg border-0 sepet-card">
+            <div class="card-body p-0">
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width:110px">Kapak</th>
+                                <th>Kitap</th>
+                                <th class="text-end">Fiyat</th>
+                                <th class="text-center">Adet</th>
+                                <th class="text-end">Tutar</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <img src="@item.KapakResmiUrl"
+                                             class="img-fluid rounded shadow-sm"
+                                             style="max-height:90px; object-fit:cover;"
+                                             alt="@item.Baslik" />
+                                    </td>
+
+                                    <td class="fw-semibold">
+                                        @item.Baslik
+                                    </td>
+
+                                    <td class="text-end">
+                                        @if (item.IndirimVar)
+                                        {
+                                            <div class="d-flex flex-column align-items-end">
+                                                <span class="text-decoration-line-through text-muted small">
+                                                    @item.OrijinalFiyat.ToString("0.00") ₺
+                                                </span>
+                                                <span class="text-success fw-bold">
+                                                    @item.IndirimliFiyat.ToString("0.00") ₺
+                                                </span>
+                                                <span class="badge bg-danger small mt-1">
+                                                    %@item.IndirimOrani İndirim
+                                                </span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <span>@item.IndirimliFiyat.ToString("0.00") ₺</span>
+                                        }
+                                    </td>
+
+                                    <td class="text-center">
+                                        <div class="d-flex align-items-center justify-content-center gap-2">
+                                            <form asp-action="AdetAzalt" asp-controller="Sepet" method="post" style="margin:0;">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="kitapID" value="@item.KitapID" />
+                                                <button type="submit" class="btn btn-sm btn-outline-secondary adet-btn">
+                                                    <i class="bi bi-dash"></i> −
+                                                </button>
+                                            </form>
+
+                                            <span class="fw-bold adet-sayi">@item.Adet</span>
+
+                                            <form asp-action="AdetArtir" asp-controller="Sepet" method="post" style="margin:0;">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="kitapID" value="@item.KitapID" />
+                                                <button type="submit" class="btn btn-sm btn-outline-secondary adet-btn">
+                                                    <i class="bi bi-plus"></i> +
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+
+                                    <td class="text-end fw-bold text-success">
+                                        @((item.IndirimliFiyat * item.Adet).ToString("0.00")) ₺
+                                    </td>
+
+                                    <td class="text-end">
+                                        <form asp-action="SepettenSil"
+                                              asp-controller="Sepet"
+                                              method="post"
+                                              onsubmit="return confirm('Ürünü sepetten kaldırmak istiyor musunuz?');">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="kitapID" value="@item.KitapID" />
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                🗑 Sil
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-4 gap-3">
+            <div class="text-white">
+                @if (kazanilanIndirim > 0)
+                {
+                    <div class="mb-2">
+                        <span class="text-muted">Ara Toplam:</span>
+                        <span class="text-decoration-line-through text-muted">
+                            @toplamindirimliTutar.ToString("0.00") ₺
+                        </span>
+                    </div>
+                    <div class="mb-2">
+                        <span class="text-success">💰 Kazanılan İndirim:</span>
+                        <span class="text-success fw-bold">
+                            -@kazanilanIndirim.ToString("0.00") ₺
+                        </span>
+                    </div>
+                }
+                <h4>
+                    Toplam Tutar:
+                    <span class="text-success fw-bold">
+                        @toplamTutar.ToString("0.00") ₺
+                    </span>
+                </h4>
+            </div>
+
+            <form asp-controller="Siparis"
+                  asp-action="Onay"
+                  method="post">
+                <input type="hidden" name="teslimatAdresi" value="Varsayılan Adres" />
+                <button type="submit"
+                        class="btn btn-success btn-lg px-5 shadow">
+                    Satın Al
+                </button>
+            </form>
+
+
+        </div>
+    }
+</div>
+
+<style>
+    body {
+        background-color: #16202A;
+    }
+
+    .sepet-card {
+        background-color: #ffffff;
+        border-radius: 16px;
+    }
+
+    table th, table td {
+        vertical-align: middle;
+    }
+
+    table tbody tr:hover {
+        background-color: #f5f7fa;
+    }
+
+    .btn-outline-danger:hover {
+        color: #fff;
+    }
+
+    .adet-btn {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-weight: bold;
+        padding: 0;
+    }
+
+    .adet-btn:hover {
+        background-color: #3B82F6;
+        border-color: #3B82F6;
+        color: #fff;
+    }
+
+    .adet-sayi {
+        min-width: 30px;
+        text-align: center;
+        font-size: 1.1rem;
+    }
+</style>

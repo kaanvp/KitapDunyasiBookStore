@@ -1,0 +1,640 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Veritabanı_Odevi</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Veritabanı_Odevi.styles.css" asp-append-version="true" />
+    <!-- _Layout.cshtml'in head bölümüne ekleyin -->
+    <link rel="stylesheet" href="~/css/bookstore.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Ek stiller */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #16202A 0%, #0F1419 100%);
+            color: #F9FAFB;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px 0;
+        }
+
+        /* Navbar stilleri */
+        .main-navbar {
+            background: rgba(22, 32, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #374151;
+        }
+
+        .navbar-brand-custom {
+            color: #3B82F6 !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+            .navbar-brand-custom:hover {
+                color: #F59E0B !important;
+            }
+
+        .nav-link-custom {
+            color: #D1D5DB !important;
+            font-weight: 500;
+            position: relative;
+            padding: 8px 15px !important;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+            .nav-link-custom:hover {
+                color: #FFFFFF !important;
+                background-color: rgba(59, 130, 246, 0.1);
+            }
+
+            .nav-link-custom.active {
+                color: #3B82F6 !important;
+                background-color: rgba(59, 130, 246, 0.2);
+            }
+
+        /* Sepet butonu */
+        .cart-btn {
+            position: relative;
+            background-color: #3B82F6;
+            border: none;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+            .cart-btn:hover {
+                background-color: #2563EB;
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+            }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #EF4444;
+            color: white;
+            font-size: 12px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Footer stilleri */
+        .main-footer {
+            background: linear-gradient(135deg, #0F1419 0%, #16202A 100%);
+            border-top: 1px solid #374151;
+            margin-top: auto;
+            padding: 40px 0 20px;
+        }
+
+        .footer-title {
+            color: #3B82F6;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .footer-link {
+            color: #9CA3AF;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+            .footer-link:hover {
+                color: #3B82F6;
+                text-decoration: none;
+            }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #374151;
+            border-radius: 50%;
+            color: #D1D5DB;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+            .social-icons a:hover {
+                background-color: #3B82F6;
+                color: white;
+                transform: translateY(-3px);
+            }
+
+        /* Dropdown Menu Stilleri */
+        .dropdown-menu {
+            background-color: #1E2A38 !important;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .dropdown-menu .dropdown-item {
+            color: #D1D5DB !important;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+
+            .dropdown-menu .dropdown-item:hover {
+                background-color: rgba(59, 130, 246, 0.2) !important;
+                color: #3B82F6 !important;
+                padding-left: 20px;
+            }
+
+        .dropdown-menu .dropdown-divider {
+            border-color: #374151 !important;
+        }
+
+        .dropdown-toggle::after {
+            border-color: #3B82F6 !important;
+        }
+
+        .dropdown-toggle:hover::after {
+            border-color: #60A5FA !important;
+        }
+
+        /* Dropdown Link Stili */
+        .nav-item.dropdown .dropdown-toggle {
+            color: #D1D5DB !important;
+            font-weight: 500;
+            padding: 8px 15px !important;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+            .nav-item.dropdown .dropdown-toggle:hover {
+                color: #FFFFFF !important;
+                background-color: rgba(59, 130, 246, 0.1);
+            }
+
+            .nav-item.dropdown .dropdown-toggle:focus {
+                color: #3B82F6 !important;
+                background-color: rgba(59, 130, 246, 0.2);
+                box-shadow: none !important;
+            }
+
+        /* Custom Dropdown Menü */
+        .dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-link {
+            color: #D1D5DB !important;
+            font-weight: 500;
+            padding: 8px 15px !important;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+            .dropdown-link:hover {
+                color: #FFFFFF !important;
+                background-color: rgba(59, 130, 246, 0.1);
+            }
+
+        .dropdown-menu-custom {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: #1E2A38;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            min-width: 220px;
+            list-style: none;
+            margin: 5px 0 0 0;
+            padding: 0;
+            display: none;
+            z-index: 1000;
+        }
+
+            .dropdown-menu-custom.show {
+                display: block;
+            }
+
+        .dropdown-item-custom {
+            display: block;
+            color: #D1D5DB;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+            .dropdown-item-custom:hover {
+                background-color: rgba(59, 130, 246, 0.2);
+                color: #3B82F6;
+                padding-left: 20px;
+            }
+
+        .dropdown-divider-custom {
+            border: none;
+            border-top: 1px solid #374151;
+            margin: 8px 0;
+        }
+
+        /* Responsive */
+        @@media (max-width: 768px) {
+            .navbar-brand-custom
+
+        {
+            font-size: 1.2rem;
+        }
+
+        .nav-link-custom {
+            padding: 10px 15px !important;
+            margin: 2px 0;
+        }
+
+        .cart-btn {
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        }
+    </style>
+    @RenderSection("Styles", required: false)
+</head>
+<body class="bg-dark-gradient">
+    <!-- Header -->
+    <header class="sticky-top">
+        <nav class="navbar navbar-expand-lg main-navbar py-3">
+            <div class="container">
+                <!-- Logo -->
+                <a class="navbar-brand navbar-brand-custom" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-book-open me-2"></i>
+                    Kitap Dünyası
+                </a>
+
+                <!-- Mobile Toggle Button -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+                    <span class="navbar-toggler-icon">
+                        <i class="fas fa-bars text-white"></i>
+                    </span>
+                </button>
+
+                <!-- Navigation Menu -->
+                <div class="collapse navbar-collapse" id="navbarMain">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-custom @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["Action"]?.ToString() == "Index" ? "active" : "")"
+                               asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-home me-1"></i> Anasayfa
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-custom @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Book" && ViewContext.RouteData.Values["Action"]?.ToString() == "Index" ? "active" : "")"
+                               asp-controller="Kitap" asp-action="KitapListele">
+                                <i class="fas fa-book me-1"></i> Kitaplar
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-custom @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Category" && ViewContext.RouteData.Values["Action"]?.ToString() == "Index" ? "active" : "")"
+                               asp-controller="Kategori" asp-action="KategoriListele">
+                                <i class="fas fa-list me-1"></i> Kategoriler
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-custom @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["Action"]?.ToString() == "About" ? "active" : "")"
+                               asp-controller="Home" asp-action="About">
+                                <i class="fas fa-info-circle me-1"></i> Hakkımızda
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-custom @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["Action"]?.ToString() == "Contact" ? "active" : "")"
+                               asp-controller="Home" asp-action="Contact">
+                                <i class="fas fa-envelope me-1"></i> İletişim
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-custom @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["Action"]?.ToString() == "Contact" ? "active" : "")"
+                               asp-controller="Indirim" asp-action="Aktif">
+                                <i></i> 🔥 İndirimler
+                            </a>
+                        </li>
+
+                        <!-- Right Side Menu -->
+                        @{
+                            var kullaniciID = Context.Session.GetInt32("KullaniciID");
+                            var kullaniciAdi = Context.Session.GetString("KullaniciAdi");
+                            var kullaniciRol = Context.Session.GetString("KullaniciRol");
+                            
+                            int sepetAdet = 0;
+                            if (kullaniciID.HasValue)
+                            {
+                                var sepetRepo = Context.RequestServices.GetService<Veritabani_Odevi.Data.SepetRepository>();
+                                if (sepetRepo != null)
+                                {
+                                    var sepet = sepetRepo.SepetiGetir(kullaniciID.Value);
+                                    if(sepet != null)
+                                    {
+                                        sepetAdet = sepet.Sum(x => x.Adet);
+                                    }
+                                }
+                            }
+                        }
+                        
+                        @if (kullaniciID.HasValue && !string.IsNullOrEmpty(kullaniciAdi))
+                        {
+                            <!-- Kullanıcı Giriş Yaptığında - ID: @kullaniciID Adi: @kullaniciAdi -->
+                            <li class="nav-item ms-2">
+                                <div class="dropdown-container">
+                                    <a href="#" class="nav-link dropdown-link" id="userDropdownLink" onclick="toggleUserDropdown(event)">
+                                        <i class="fas fa-user me-1"></i>
+                                        @kullaniciAdi
+                                    </a>
+                                    <ul class="dropdown-menu-custom" id="userDropdownMenu">
+                                        <li>
+                                            <a class="dropdown-item-custom" asp-controller="Kullanici" asp-action="Detay" asp-route-id="@kullaniciID.Value">
+                                                <i class="fas fa-id-card me-2"></i> Profilim
+                                            </a>
+                                        </li>
+                                        @if (kullaniciRol == "Admin")
+                                        {
+                                            <li>
+                                                <a class="dropdown-item-custom" asp-controller="Kullanici" asp-action="TumKullanicilar">
+                                                    <i class="fas fa-users me-2"></i> Kullanıcı Yönetimi
+                                                </a>
+                                            </li>
+                                        }
+                                        <li>
+                                            <a class="dropdown-item-custom" asp-controller="Siparis" asp-action="Index">
+                                                <i class="fas fa-shopping-bag me-2"></i> Siparişlerim
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item-custom" asp-controller="Yorum" asp-action="Listeleme" asp-route-kullaniciID="@kullaniciID.Value">
+                                                <i class="fas fa-comment me-2"></i> Yorumlarım
+                                            </a>
+                                        </li>
+                                        <li><hr class="dropdown-divider-custom"></li>
+                                        <li>
+                                            <form asp-controller="Kullanici" asp-action="Cikis" method="post" style="width: 100%;">
+                                                <button class="dropdown-item-custom text-danger w-100 text-start" type="submit" style="border: none; background: none; cursor: pointer; padding: 12px 15px; font-weight: 500;">
+                                                    <i class="fas fa-sign-out-alt me-2"></i> <strong>Çıkış Yap</strong>
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            <!-- Kullanıcı Giriş Yapmadığında -->
+                            <li class="nav-item ms-2">
+                                <a asp-controller="Kullanici" asp-action="GirisKayit" class="btn btn-outline-primary">
+                                    <i class="fas fa-user me-1"></i> Giriş/Kayıt
+                                </a>
+                            </li>
+                        }
+                        
+                        <!-- Sepet Butonu -->
+                        <li class="nav-item ms-2">
+                            <a class="btn btn-primary position-relative" asp-controller="Sepet" asp-action="Index">
+                                <i class="fas fa-shopping-cart me-1"></i>
+                                <span id="cartCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    @sepetAdet
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            @RenderBody()
+        </div>
+    </main>
+
+    <!-- Sepet Sidebar (Opsiyonel - Sepet yoksa kaldırın) -->
+    @if (ViewContext.RouteData.Values["Controller"]?.ToString() == "Cart")
+    {
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="cartSidebar" style="width: 400px;">
+            <div class="offcanvas-header bg-dark text-white">
+                <h5 class="offcanvas-title">
+                    <i class="fas fa-shopping-cart me-2"></i> Sepetim
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+            </div>
+            <div class="offcanvas-body">
+                <!-- Sepet içeriği buraya gelecek -->
+                <div class="text-center text-muted py-5">
+                    <i class="fas fa-shopping-cart fa-3x mb-3"></i>
+                    <p>Sepetiniz boş</p>
+                    <a asp-controller="Book" asp-action="Index" class="btn btn-primary">
+                        <i class="fas fa-book me-2"></i> Alışverişe Başla
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <!-- Hakkımızda -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5 class="footer-title">
+                        <i class="fas fa-book-open me-2"></i> Kitap Dünyası
+                    </h5>
+                    <p class="text-muted">
+                        En yeni ve en çok satan kitapları en uygun fiyatlarla sizlerle buluşturuyoruz.
+                        Kaliteli okuma deneyimi için buradayız.
+                    </p>
+                    <div class="social-icons mt-3">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <!-- Hızlı Linkler -->
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Hızlı Linkler</h5>
+                    <a class="footer-link" asp-controller="Home" asp-action="Index">Anasayfa</a>
+                    <a class="footer-link" asp-controller="Book" asp-action="Index">Kitaplar</a>
+                    <a class="footer-link" asp-controller="Category" asp-action="Index">Kategoriler</a>
+                    <a class="footer-link" asp-controller="Home" asp-action="About">Hakkımızda</a>
+                    <a class="footer-link" asp-controller="Home" asp-action="Contact">İletişim</a>
+                </div>
+
+                <!-- Kategoriler -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Popüler Kategoriler</h5>
+                    <a class="footer-link" asp-controller="Book" asp-action="Category" asp-route-category="Roman">Roman</a>
+                    <a class="footer-link" asp-controller="Book" asp-action="Category" asp-route-category="Bilim Kurgu">Bilim Kurgu</a>
+                    <a class="footer-link" asp-controller="Book" asp-action="Category" asp-route-category="Fantastik">Fantastik</a>
+                    <a class="footer-link" asp-controller="Book" asp-action="Category" asp-route-category="Kişisel Gelişim">Kişisel Gelişim</a>
+                    <a class="footer-link" asp-controller="Book" asp-action="Category" asp-route-category="Tarih">Tarih</a>
+                </div>
+
+                <!-- İletişim -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">İletişim</h5>
+                    <p class="text-muted mb-3">
+                        <i class="fas fa-map-marker-alt me-2"></i> Ankara, Türkiye
+                    </p>
+                    <p class="text-muted mb-3">
+                        <i class="fas fa-phone me-2"></i> +90 (212) 555 01 23
+                    </p>
+                    <p class="text-muted mb-3">
+                        <i class="fas fa-envelope me-2"></i> info@kitapdunyasi.com
+                    </p>
+                    <p class="text-muted">
+                        <i class="fas fa-clock me-2"></i> Hafta İçi: 09:00 - 18:00
+                    </p>
+                </div>
+            </div>
+
+            <hr class="border-secondary my-4">
+
+            <!-- Copyright -->
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="text-muted mb-0">
+                        &copy; @DateTime.Now.Year Kitap Dünyası. Tüm hakları saklıdır.
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="footer-link me-3">Gizlilik Politikası</a>
+                    <a href="#" class="footer-link">Kullanım Şartları</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/bookstore.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // Basit JavaScript fonksiyonları
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Kitap Dünyası yüklendi');
+
+            // Aktif sayfayı vurgula
+            highlightActiveNavLink();
+
+            // Sepet sayısını güncelle (örnek)
+            updateCartCount();
+
+            // Dropdown menüyü kapatmak için document click event'i
+            document.addEventListener('click', function(event) {
+                const userDropdownMenu = document.getElementById('userDropdownMenu');
+                const userDropdownLink = document.getElementById('userDropdownLink');
+                
+                if (userDropdownMenu && userDropdownLink) {
+                    if (!event.target.closest('.dropdown-container')) {
+                        userDropdownMenu.classList.remove('show');
+                    }
+                }
+            });
+
+            // Smooth scroll - sadece geçerli href'ler için
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href && href !== '#' && href.length > 1) {
+                        e.preventDefault();
+                        const target = document.querySelector(href);
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+        });
+
+        // Dropdown toggle fonksiyonu
+        function toggleUserDropdown(event) {
+            event.preventDefault();
+            const userDropdownMenu = document.getElementById('userDropdownMenu');
+            if (userDropdownMenu) {
+                userDropdownMenu.classList.toggle('show');
+            }
+        }
+
+        function highlightActiveNavLink() {
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('.nav-link-custom').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && currentPath.includes(href.replace('~', ''))) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        function updateCartCount() {
+            // Sepet sayısını localStorage'dan al (örnek)
+            const cartCount = localStorage.getItem('cartCount') || 0;
+            const cartElement = document.querySelector('.cart-count');
+            if (cartElement) {
+                cartElement.textContent = cartCount;
+            }
+        }
+
+        // Sepete ekleme fonksiyonu (örnek)
+        function addToCart(bookId, bookTitle) {
+            // Sepet sayısını artır
+            let cartCount = parseInt(localStorage.getItem('cartCount') || 0);
+            cartCount++;
+            localStorage.setItem('cartCount', cartCount);
+
+            // UI'ı güncelle
+            updateCartCount();
+
+            // Bildirim göster
+            Swal.fire({
+                icon: 'success',
+                title: 'Sepete Eklendi!',
+                text: `${bookTitle} sepete eklendi.`,
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        }
+    </script>
+    <!-- Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/bookstore.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

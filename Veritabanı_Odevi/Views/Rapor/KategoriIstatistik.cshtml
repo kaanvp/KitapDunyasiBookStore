@@ -1,0 +1,951 @@
+﻿@using Veritabani_Odevi.DTOs
+@using static Veritabani_Odevi.Data.RaporRepository
+@model List<KategoriIstatistik>
+
+<div class="container-fluid px-4 py-5">
+    <div class="header-section mb-5">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+            <div>
+                <h1 class="display-5 fw-bold text-gradient mb-2">
+                    <i class="bi bi-graph-up-arrow me-3"></i>Kategori Bazlı Satış Raporu
+                </h1>
+                <p class="text-muted mb-0">Kapsamlı kategori performans analizi ve satış metrikleri</p>
+            </div>
+            <div class="stats-badges">
+                <span class="badge-custom">
+                    <i class="bi bi-bar-chart-fill me-2"></i>@Model.Count Kategori
+                </span>
+            </div>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state">
+            <div class="empty-icon">
+                <i class="bi bi-inbox"></i>
+            </div>
+            <h3>Henüz Veri Bulunmuyor</h3>
+            <p class="text-muted">Satış verileri burada görünecektir.</p>
+        </div>
+    }
+    else
+    {
+        <!-- Özet Metrik Kartları -->
+        <div class="row g-4 mb-5">
+            <div class="col-xl-3 col-md-6">
+                <div class="metric-card metric-card-purple">
+                    <div class="metric-icon-wrapper">
+                        <i class="bi bi-cart-check-fill"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h2>@Model.Sum(x => x.ToplamSatisAdedi)</h2>
+                        <p>Sipariş Kalemi</p>
+                        <div class="metric-trend">
+                            <i class="bi bi-arrow-up"></i>
+                            <span>Farklı İşlem Sayısı</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="metric-card metric-card-blue">
+                    <div class="metric-icon-wrapper">
+                        <i class="bi bi-bookshelf"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h2>@Model.Sum(x => x.ToplamKitapAdedi)</h2>
+                        <p>Satılan Adet</p>
+                        <div class="metric-trend">
+                            <i class="bi bi-arrow-up"></i>
+                            <span>Toplam Kitap Adedi</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="metric-card metric-card-green">
+                    <div class="metric-icon-wrapper">
+                        <i class="bi bi-currency-dollar"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h2>@Model.Sum(x => x.ToplamCiro).ToString("C0")</h2>
+                        <p>Toplam Ciro</p>
+                        <div class="metric-trend">
+                            <i class="bi bi-graph-up"></i>
+                            <span>Gelir Toplamı</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="metric-card metric-card-amber">
+                    <div class="metric-icon-wrapper">
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h2>@Model.Average(x => x.OrtalamaPuan).ToString("0.0")</h2>
+                        <p>Ortalama Puan</p>
+                        <div class="metric-trend">
+                            <i class="bi bi-trophy"></i>
+                            <span>Müşteri Memnuniyeti</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kategori Grid Kartları -->
+        <div class="row g-4 mb-5">
+            @foreach (var item in Model.OrderByDescending(x => x.ToplamCiro))
+            {
+                var ciroOrani = (decimal)item.ToplamCiro / Model.Sum(x => x.ToplamCiro) * 100;
+                var satisOrani = Model.Sum(x => x.ToplamSatisAdedi) > 0 ? (double)item.ToplamSatisAdedi / Model.Sum(x => x.ToplamSatisAdedi) * 100 : 0;
+
+                <div class="col-xl-4 col-md-6">
+                    <div class="category-sales-card">
+                        <div class="card-header-custom">
+                            <div class="category-icon-box">
+                                <i class="bi bi-bookmark-star-fill"></i>
+                            </div>
+                            <div class="category-title-box">
+                                <h4>@item.KategoriAdi</h4>
+                                <span class="category-book-count">@item.KategoriKitapSayisi kitap kategoride</span>
+                            </div>
+                        </div>
+
+                        <div class="card-body-custom">
+                            <!-- Ana Metrikler -->
+                            <div class="main-metrics">
+                                <div class="main-metric">
+                                    <div class="main-metric-icon main-metric-purple">
+                                        <i class="bi bi-cart3"></i>
+                                    </div>
+                                    <div class="main-metric-info">
+                                        <div class="main-metric-label">Sipariş Kalemi</div>
+                                        <div class="main-metric-value">@item.ToplamSatisAdedi</div>
+                                    </div>
+                                </div>
+
+                                <div class="main-metric">
+                                    <div class="main-metric-icon main-metric-blue">
+                                        <i class="bi bi-book"></i>
+                                    </div>
+                                    <div class="main-metric-info">
+                                        <div class="main-metric-label">Satılan Adet</div>
+                                        <div class="main-metric-value">@item.ToplamKitapAdedi</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Ciro Vurgusu -->
+                            <div class="revenue-highlight">
+                                <div class="revenue-icon">
+                                    <i class="bi bi-cash-stack"></i>
+                                </div>
+                                <div class="revenue-details">
+                                    <div class="revenue-label">Toplam Ciro</div>
+                                    <div class="revenue-amount">@item.ToplamCiro.ToString("C")</div>
+                                    <div class="revenue-percentage">Toplam cirodaki payı: %@ciroOrani.ToString("0.0")</div>
+                                </div>
+                            </div>
+
+                            <!-- Puan ve İlerleme -->
+                            <div class="rating-progress-section">
+                                <div class="rating-display-inline">
+                                    <div class="rating-stars-inline">
+                                        @for (int i = 1; i <= 5; i++)
+                                        {
+                                            if (i <= Math.Floor(item.OrtalamaPuan))
+                                            {
+                                                <i class="bi bi-star-fill"></i>
+                                            }
+                                            else if (i - item.OrtalamaPuan < 1)
+                                            {
+                                                <i class="bi bi-star-half"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="bi bi-star"></i>
+                                            }
+                                        }
+                                    </div>
+                                    <span class="rating-value-inline">@item.OrtalamaPuan.ToString("0.00")</span>
+                                </div>
+
+                                <div class="progress-wrapper">
+                                    <div class="progress-label-row">
+                                        <span>Satış Oranı</span>
+                                        <span class="progress-value">%@satisOrani.ToString("0.0")</span>
+                                    </div>
+                                    <div class="custom-progress-bar">
+                                        <div class="custom-progress-fill" style="width: @satisOrani.ToString("0.0")%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Detaylı Tablo -->
+        <div class="detailed-table-section">
+            <div class="table-section-header">
+                <h3><i class="bi bi-table me-2"></i>Detaylı Kategori Analizi</h3>
+                <p>Tüm kategorilerin karşılaştırmalı performans verileri</p>
+            </div>
+
+            <div class="table-responsive">
+                <table class="modern-sales-table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th-content-flex">
+                                    <i class="bi bi-tag-fill me-2"></i>Kategori
+                                </div>
+                            </th>
+                            <th class="text-center">
+                                <div class="th-content-flex">
+                                    <i class="bi bi-cart-check me-2"></i>Sipariş Kalemi
+                                </div>
+                            </th>
+                            <th class="text-center">
+                                <div class="th-content-flex">
+                                    <i class="bi bi-book-fill me-2"></i>Satılan Adet
+                                </div>
+                            </th>
+                            <th class="text-center">
+                                <div class="th-content-flex">
+                                    <i class="bi bi-cash me-2"></i>Toplam Ciro
+                                </div>
+                            </th>
+                            <th class="text-center">
+                                <div class="th-content-flex">
+                                    <i class="bi bi-star me-2"></i>Ortalama Puan
+                                </div>
+                            </th>
+                            <th class="text-center">
+                                <div class="th-content-flex">
+                                    <i class="bi bi-collection me-2"></i>Kitap Sayısı
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OrderByDescending(x => x.ToplamCiro))
+                        {
+                            <tr>
+                                <td>
+                                    <div class="table-category-cell">
+                                        <div class="table-category-avatar">
+                                            <i class="bi bi-folder-fill"></i>
+                                        </div>
+                                        <span class="table-category-name">@item.KategoriAdi</span>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span class="table-value-badge badge-purple">@item.ToplamSatisAdedi</span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="table-value-badge badge-blue">@item.ToplamKitapAdedi</span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="table-value-badge badge-green">@item.ToplamCiro.ToString("C")</span>
+                                </td>
+                                <td class="text-center">
+                                    <div class="table-rating-cell">
+                                        <span class="table-stars">
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                if (i <= Math.Floor(item.OrtalamaPuan))
+                                                {
+                                                    <i class="bi bi-star-fill"></i>
+                                                }
+                                                else if (i - item.OrtalamaPuan < 1)
+                                                {
+                                                    <i class="bi bi-star-half"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="bi bi-star"></i>
+                                                }
+                                            }
+                                        </span>
+                                        <span class="table-rating-number">@item.OrtalamaPuan.ToString("0.00")</span>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span class="table-value-badge badge-amber">@item.KategoriKitapSayisi</span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr class="table-total-row">
+                            <td>
+                                <div class="table-total-label">
+                                    <i class="bi bi-calculator me-2"></i>TOPLAM
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <span class="table-total-value">@Model.Sum(x => x.ToplamSatisAdedi)</span>
+                            </td>
+                            <td class="text-center">
+                                <span class="table-total-value">@Model.Sum(x => x.ToplamKitapAdedi)</span>
+                            </td>
+                            <td class="text-center">
+                                <span class="table-total-value table-total-revenue">@Model.Sum(x => x.ToplamCiro).ToString("C")</span>
+                            </td>
+                            <td class="text-center">
+                                <span class="table-total-value">@Model.Average(x => x.OrtalamaPuan).ToString("0.00")</span>
+                            </td>
+                            <td class="text-center">
+                                <span class="table-total-value">@Model.Sum(x => x.KategoriKitapSayisi)</span>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    }
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<style>
+    body {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        min-height: 100vh;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .text-gradient {
+        background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .text-muted {
+        color: #94a3b8 !important;
+    }
+
+    .header-section {
+        animation: fadeInDown 0.6s ease-out;
+    }
+
+    .badge-custom {
+        background: rgba(139, 92, 246, 0.1);
+        border: 1px solid rgba(139, 92, 246, 0.3);
+        color: #8b5cf6;
+        padding: 0.5rem 1.25rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.875rem;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    /* Metrik Kartlar */
+    .metric-card {
+        background: rgba(30, 41, 59, 0.5);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 1.75rem;
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        transition: all 0.3s ease;
+        animation: fadeInUp 0.6s ease-out;
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+    }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, currentColor, transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+        }
+
+            .metric-card:hover::before {
+                opacity: 1;
+            }
+
+    .metric-card-purple {
+        color: #a78bfa;
+    }
+
+    .metric-card-blue {
+        color: #60a5fa;
+    }
+
+    .metric-card-green {
+        color: #34d399;
+    }
+
+    .metric-card-amber {
+        color: #fbbf24;
+    }
+
+    .metric-icon-wrapper {
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.75rem;
+        flex-shrink: 0;
+    }
+
+    .metric-content {
+        flex: 1;
+    }
+
+        .metric-content h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 0 0.25rem 0;
+            color: #fff;
+        }
+
+        .metric-content p {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            margin: 0 0 0.5rem 0;
+            font-weight: 500;
+        }
+
+    .metric-trend {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.75rem;
+        color: currentColor;
+        font-weight: 600;
+    }
+
+    /* Kategori Satış Kartları */
+    .category-sales-card {
+        background: rgba(30, 41, 59, 0.5);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        animation: fadeInUp 0.8s ease-out;
+        height: 100%;
+    }
+
+        .category-sales-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.2);
+        }
+
+    .card-header-custom {
+        background: rgba(15, 23, 42, 0.6);
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .category-icon-box {
+        width: 56px;
+        height: 56px;
+        background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.75rem;
+        color: #fff;
+        flex-shrink: 0;
+    }
+
+    .category-title-box {
+        flex: 1;
+    }
+
+        .category-title-box h4 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0 0 0.5rem 0;
+        }
+
+    .category-book-count {
+        display: inline-block;
+        background: rgba(139, 92, 246, 0.1);
+        color: #a78bfa;
+        padding: 0.25rem 0.75rem;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    .card-body-custom {
+        padding: 1.75rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    /* Ana Metrikler */
+    .main-metrics {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .main-metric {
+        background: rgba(15, 23, 42, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .main-metric-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        color: #fff;
+        flex-shrink: 0;
+    }
+
+    .main-metric-purple {
+        background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+    }
+
+    .main-metric-blue {
+        background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    }
+
+    .main-metric-info {
+        flex: 1;
+    }
+
+    .main-metric-label {
+        font-size: 0.75rem;
+        color: #94a3b8;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.25rem;
+    }
+
+    .main-metric-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #fff;
+    }
+
+    /* Ciro Vurgusu */
+    .revenue-highlight {
+        background: linear-gradient(135deg, rgba(52, 211, 153, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
+        border: 1px solid rgba(52, 211, 153, 0.2);
+        border-radius: 16px;
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .revenue-icon {
+        width: 56px;
+        height: 56px;
+        background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.75rem;
+        color: #fff;
+        flex-shrink: 0;
+    }
+
+    .revenue-details {
+        flex: 1;
+    }
+
+    .revenue-label {
+        font-size: 0.75rem;
+        color: #94a3b8;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.5rem;
+    }
+
+    .revenue-amount {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #34d399;
+        margin-bottom: 0.25rem;
+    }
+
+    .revenue-percentage {
+        font-size: 0.875rem;
+        color: #10b981;
+        font-weight: 600;
+    }
+
+    /* Puan ve İlerleme */
+    .rating-progress-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .rating-display-inline {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(15, 23, 42, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 1rem;
+    }
+
+    .rating-stars-inline {
+        display: flex;
+        gap: 0.25rem;
+        color: #fbbf24;
+        font-size: 1.125rem;
+    }
+
+    .rating-value-inline {
+        font-weight: 700;
+        color: #fff;
+        font-size: 1.25rem;
+    }
+
+    .progress-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .progress-label-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.875rem;
+    }
+
+        .progress-label-row span:first-child {
+            color: #e2e8f0;
+            font-weight: 600;
+        }
+
+    .progress-value {
+        color: #a78bfa;
+        font-weight: 700;
+    }
+
+    .custom-progress-bar {
+        height: 8px;
+        background: rgba(15, 23, 42, 0.6);
+        border-radius: 50px;
+        overflow: hidden;
+    }
+
+    .custom-progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #8b5cf6 0%, #ec4899 100%);
+        border-radius: 50px;
+        transition: width 1s ease-out;
+    }
+
+    /* Detaylı Tablo */
+    .detailed-table-section {
+        background: rgba(30, 41, 59, 0.5);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        overflow: hidden;
+        animation: fadeInUp 1s ease-out;
+    }
+
+    .table-section-header {
+        background: rgba(15, 23, 42, 0.6);
+        padding: 2rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+        .table-section-header h3 {
+            margin: 0 0 0.5rem 0;
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .table-section-header p {
+            margin: 0;
+            color: #94a3b8;
+            font-size: 0.875rem;
+        }
+
+    .modern-sales-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+        .modern-sales-table thead {
+            background: rgba(15, 23, 42, 0.4);
+        }
+
+            .modern-sales-table thead th {
+                padding: 1.25rem 1.5rem;
+                font-weight: 600;
+                font-size: 0.875rem;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                color: #94a3b8;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+    .th-content-flex {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modern-sales-table tbody tr {
+        transition: all 0.3s ease;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+        .modern-sales-table tbody tr:hover {
+            background: rgba(139, 92, 246, 0.05);
+            transform: scale(1.01);
+        }
+
+    .modern-sales-table tbody td {
+        padding: 1.5rem 1.5rem;
+        color: #e2e8f0;
+        vertical-align: middle;
+    }
+
+    .table-category-cell {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .table-category-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.125rem;
+        color: #fff;
+        flex-shrink: 0;
+    }
+
+    .table-category-name {
+        font-weight: 600;
+        color: #fff;
+    }
+
+    .table-value-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.875rem;
+    }
+
+    .badge-purple {
+        background: rgba(167, 139, 250, 0.1);
+        color: #a78bfa;
+        border: 1px solid rgba(167, 139, 250, 0.2);
+    }
+
+    .badge-blue {
+        background: rgba(96, 165, 250, 0.1);
+        color: #60a5fa;
+        border: 1px solid rgba(96, 165, 250, 0.2);
+    }
+
+    .badge-green {
+        background: rgba(52, 211, 153, 0.1);
+        color: #34d399;
+        border: 1px solid rgba(52, 211, 153, 0.2);
+    }
+
+    .badge-amber {
+        background: rgba(251, 191, 36, 0.1);
+        color: #fbbf24;
+        border: 1px solid rgba(251, 191, 36, 0.2);
+    }
+
+    .table-rating-cell {
+        display: flex;
+        align-items: center display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .table-stars {
+        display: flex;
+        gap: 0.15rem;
+        color: #fbbf24;
+        font-size: 1rem;
+    }
+
+    .table-rating-number {
+        font-weight: 600;
+        color: #fff;
+        font-size: 0.875rem;
+    }
+
+    .table-total-row {
+        background: rgba(15, 23, 42, 0.6);
+    }
+
+    .table-total-label {
+        display: flex;
+        align-items: center;
+        font-weight: 700;
+        color: #fff;
+        gap: 0.5rem;
+    }
+
+    .table-total-value {
+        font-weight: 700;
+        color: #fff;
+    }
+
+    .table-total-revenue {
+        color: #34d399;
+    }
+
+    /* Animasyonlar */
+    @@keyframes fadeInUp {
+        0%
+
+    {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+
+    @@keyframes fadeInDown {
+        0%
+
+    {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+
+    /* Boş veri durumu */
+    .empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem 2rem;
+        color: #94a3b8;
+    }
+
+    .empty-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #8b5cf6;
+    }
+
+    /* Responsive düzenlemeler */
+    @@media (max-width: 1200px) {
+        .metric-card h2
+
+    {
+        font-size: 1.75rem;
+    }
+
+    .metric-content p {
+        font-size: 0.75rem;
+    }
+
+    }
+
+    @@media (max-width: 768px) {
+        .main-metrics
+
+    {
+        grid-template-columns: 1fr;
+    }
+
+    .rating-display-inline {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    }
+
+    @@media (max-width: 576px) {
+        .category-sales-card
+
+    {
+        margin-bottom: 1.5rem;
+    }
+
+    .table-section-header h3 {
+        font-size: 1.25rem;
+    }
+
+    .metric-content h2 {
+        font-size: 1.5rem;
+    }
+
+    }
+</style>

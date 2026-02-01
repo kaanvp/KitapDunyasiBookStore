@@ -1,0 +1,612 @@
+﻿@{
+    ViewData["Title"] = "İletişim";
+}
+
+<div class="contact-page">
+    <div class="container-fluid px-4 py-5">
+        <!-- Başlık Bölümü -->
+        <div class="contact-header mb-5">
+            <div class="text-center">
+                <h1 class="display-4 fw-bold text-gradient mb-3">
+                    <i class="bi bi-chat-dots-fill me-3"></i>Bizimle İletişime Geçin
+                </h1>
+                <p class="lead text-muted mb-0">
+                    Sorularınız, önerileriniz veya geri bildirimleriniz için buradayız
+                </p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- İletişim Formu -->
+            <div class="col-lg-7">
+                <div class="contact-form-card">
+                    <div class="card-header-section">
+                        <h3><i class="bi bi-envelope-fill me-2"></i>Mesaj Gönderin</h3>
+                        <p>Formu doldurun, en kısa sürede size geri dönelim</p>
+                    </div>
+
+                    <form class="contact-form" id="contactForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="firstName" class="form-label">
+                                        <i class="bi bi-person me-2"></i>Ad
+                                    </label>
+                                    <input type="text" class="form-control-custom" id="firstName" placeholder="Adınız" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="lastName" class="form-label">
+                                        <i class="bi bi-person me-2"></i>Soyad
+                                    </label>
+                                    <input type="text" class="form-control-custom" id="lastName" placeholder="Soyadınız" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email" class="form-label">
+                                        <i class="bi bi-envelope me-2"></i>E-posta
+                                    </label>
+                                    <input type="email" class="form-control-custom" id="email" placeholder="ornek@email.com" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="phone" class="form-label">
+                                        <i class="bi bi-telephone me-2"></i>Telefon
+                                    </label>
+                                    <input type="tel" class="form-control-custom" id="phone" placeholder="(___) ___ __ __">
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="subject" class="form-label">
+                                        <i class="bi bi-tag me-2"></i>Konu
+                                    </label>
+                                    <select class="form-control-custom" id="subject" required>
+                                        <option value="">Konu seçiniz...</option>
+                                        <option value="genel">Genel Bilgi</option>
+                                        <option value="siparis">Sipariş Hakkında</option>
+                                        <option value="destek">Teknik Destek</option>
+                                        <option value="oneri">Öneri & Şikayet</option>
+                                        <option value="isbirligi">İş Birliği</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="message" class="form-label">
+                                        <i class="bi bi-chat-text me-2"></i>Mesajınız
+                                    </label>
+                                    <textarea class="form-control-custom" id="message" rows="6" placeholder="Mesajınızı buraya yazın..." required></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="btn-submit">
+                                    <i class="bi bi-send-fill me-2"></i>Mesajı Gönder
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- İletişim Bilgileri -->
+            <div class="col-lg-5">
+                <div class="contact-info-section">
+                    <!-- İletişim Kartları -->
+                    <div class="info-card">
+                        <div class="info-icon info-icon-blue">
+                            <i class="bi bi-geo-alt-fill"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Adres</h4>
+                            <p>Atatürk Bulvarı No:123<br>Çankaya, Ankara 06000</p>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-icon info-icon-green">
+                            <i class="bi bi-telephone-fill"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Telefon</h4>
+                            <p>+90 (212) 555-0123<br>+90 (555) 123 45 67</p>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-icon info-icon-purple">
+                            <i class="bi bi-envelope-fill"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>E-posta</h4>
+                            <p>info@kitapdunyasi.com<br>destek@kitapdunyasi.com</p>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-icon info-icon-orange">
+                            <i class="bi bi-clock-fill"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Çalışma Saatleri</h4>
+                            <p>Pazartesi - Cuma: 09:00 - 18:00<br>Cumartesi: 10:00 - 16:00</p>
+                        </div>
+                    </div>
+
+                    <!-- Sosyal Medya -->
+                    <div class="social-media-card">
+                        <h4>Sosyal Medya</h4>
+                        <div class="social-links">
+                            <a href="#" class="social-link social-facebook">
+                                <i class="bi bi-facebook"></i>
+                            </a>
+                            <a href="#" class="social-link social-twitter">
+                                <i class="bi bi-twitter-x"></i>
+                            </a>
+                            <a href="#" class="social-link social-instagram">
+                                <i class="bi bi-instagram"></i>
+                            </a>
+                            <a href="#" class="social-link social-linkedin">
+                                <i class="bi bi-linkedin"></i>
+                            </a>
+                            <a href="#" class="social-link social-youtube">
+                                <i class="bi bi-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Harita Bölümü -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="map-section">
+                    <div class="map-header">
+                        <h3><i class="bi bi-map-fill me-2"></i>Konumumuz</h3>
+                        <p>Mağazamızı ziyaret etmek isterseniz</p>
+                    </div>
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3060.0254458!2d32.8540671!3d39.9208312!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d34f190a9c1e69%3A0x5e3f6e2c8c3c1e69!2sAnkara!5e0!3m2!1str!2str!4v1234567890123"
+                                width="100%"
+                                height="400"
+                                style="border:0; border-radius: 16px;"
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<style>
+    body {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        min-height: 100vh;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .contact-page {
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    .text-gradient {
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .text-muted {
+        color: #94a3b8 !important;
+    }
+
+    .contact-header {
+        animation: fadeInDown 0.8s ease-out;
+    }
+
+    /* Form Card */
+    .contact-form-card {
+        background: rgba(30, 41, 59, 0.5);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        padding: 2rem;
+        animation: fadeInLeft 0.8s ease-out;
+    }
+
+    .card-header-section {
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+        .card-header-section h3 {
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-header-section p {
+            color: #94a3b8;
+            margin: 0;
+            font-size: 0.875rem;
+        }
+
+    /* Form Elemanları */
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        color: #e2e8f0;
+        font-weight: 600;
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .form-control-custom {
+        width: 100%;
+        padding: 0.875rem 1.125rem;
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: #fff;
+        font-size: 0.9375rem;
+        transition: all 0.3s ease;
+    }
+
+        .form-control-custom:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        .form-control-custom::placeholder {
+            color: #64748b;
+        }
+
+    select.form-control-custom {
+        cursor: pointer;
+    }
+
+    textarea.form-control-custom {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 1rem 2rem;
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        border: none;
+        border-radius: 12px;
+        color: #fff;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+    /* İletişim Bilgileri */
+    .contact-info-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        animation: fadeInRight 0.8s ease-out;
+    }
+
+    .info-card {
+        background: rgba(30, 41, 59, 0.5);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 1.5rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 1.25rem;
+        transition: all 0.3s ease;
+    }
+
+        .info-card:hover {
+            transform: translateX(5px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+    .info-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: #fff;
+        flex-shrink: 0;
+    }
+
+    .info-icon-blue {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    }
+
+    .info-icon-green {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+
+    .info-icon-purple {
+        background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    }
+
+    .info-icon-orange {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    }
+
+    .info-content h4 {
+        color: #fff;
+        font-size: 1.125rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .info-content p {
+        color: #94a3b8;
+        margin: 0;
+        font-size: 0.9375rem;
+        line-height: 1.6;
+    }
+
+    /* Sosyal Medya */
+    .social-media-card {
+        background: rgba(30, 41, 59, 0.5);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 1.5rem;
+    }
+
+        .social-media-card h4 {
+            color: #fff;
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+    .social-links {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    .social-link {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        color: #fff;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+    .social-facebook {
+        background: linear-gradient(135deg, #1877f2 0%, #0c63d4 100%);
+    }
+
+    .social-twitter {
+        background: linear-gradient(135deg, #000000 0%, #333333 100%);
+    }
+
+    .social-instagram {
+        background: linear-gradient(135deg, #e1306c 0%, #fd1d1d 50%, #f77737 100%);
+    }
+
+    .social-linkedin {
+        background: linear-gradient(135deg, #0077b5 0%, #005885 100%);
+    }
+
+    .social-youtube {
+        background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+    }
+
+    /* Harita Bölümü */
+    .map-section {
+        background: rgba(30, 41, 59, 0.5);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        padding: 2rem;
+        animation: fadeInUp 1s ease-out;
+    }
+
+    .map-header {
+        margin-bottom: 1.5rem;
+    }
+
+        .map-header h3 {
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .map-header p {
+            color: #94a3b8;
+            margin: 0;
+            font-size: 0.875rem;
+        }
+
+    .map-container {
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Animasyonlar */
+    @@keyframes fadeIn {
+        from
+
+    {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+    }
+
+    @@keyframes fadeInDown {
+        from
+
+    {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+
+    @@keyframes fadeInLeft {
+        from
+
+    {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    }
+
+    @@keyframes fadeInRight {
+        from
+
+    {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    }
+
+    @@keyframes fadeInUp {
+        from
+
+    {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+
+    /* Responsive */
+    @@media (max-width: 991px) {
+        .contact-form-card
+
+    {
+        margin-bottom: 2rem;
+    }
+
+    }
+
+    @@media (max-width: 768px) {
+        .contact-form-card, .map-section
+
+    {
+        padding: 1.5rem;
+    }
+
+    .btn-submit {
+        padding: 0.875rem 1.5rem;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
+    }
+</style>
+
+<script>
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Form verilerini al
+        const formData = {
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            subject: document.getElementById('subject').value,
+            message: document.getElementById('message').value
+        };
+
+        // Burada form gönderim işlemi yapılabilir
+        console.log('Form gönderildi:', formData);
+
+        // Başarı mesajı göster
+        alert('Mesajınız başarıyla gönderildi! En kısa sürede size geri dönüş yapacağız.');
+
+        // Formu temizle
+        this.reset();
+    });
+</script>

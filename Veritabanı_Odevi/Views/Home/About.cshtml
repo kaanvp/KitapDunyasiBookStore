@@ -1,0 +1,345 @@
+@{
+    ViewData["Title"] = "Hakkımızda - Kitap Kütüphanesi";
+}
+
+@section Styles {
+    <style>
+        :root {
+            --primary-color: #16202A;
+            --primary-light: #1E2A38;
+            --secondary-color: #3B82F6;
+            --accent-color: #F59E0B;
+            --success-color: #10B981;
+            --text-color: #F9FAFB;
+            --text-secondary: #D1D5DB;
+            --text-muted: #9CA3AF;
+            --card-bg: #1E2A38;
+            --border-color: #374151;
+        }
+
+        .about-hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+            padding: 60px 20px;
+            color: var(--text-color);
+            text-align: center;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .about-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .about-hero p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .about-section {
+            margin-bottom: 50px;
+        }
+
+        .about-section h2 {
+            color: var(--secondary-color);
+            font-size: 2rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-color);
+            display: inline-block;
+        }
+
+        .about-section p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary-color);
+            box-shadow: 0 8px 12px rgba(59, 130, 246, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .feature-card h3 {
+            color: var(--secondary-color);
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            color: white;
+        }
+
+        .stat-box h3 {
+            font-size: 2.5rem;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .stat-box p {
+            margin: 5px 0 0 0;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .team-section {
+            margin-top: 60px;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .team-member {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .team-member h4 {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin: 15px 0 5px 0;
+        }
+
+        .team-member p {
+            color: var(--text-muted);
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 15px;
+        }
+
+        .mission-box {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
+            border-left: 4px solid var(--secondary-color);
+            padding: 30px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+
+        .mission-box h3 {
+            color: var(--secondary-color);
+            margin-top: 0;
+        }
+
+        .mission-box p {
+            color: var(--text-secondary);
+            margin-bottom: 0;
+            font-style: italic;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+    </style>
+}
+
+<!-- Hero Section -->
+<div class="about-hero">
+    <h1>Hakkımızda</h1>
+    <p>Dijital çağda kitap kütüphanesi hizmetini sunmak için kurulan modern bir platform</p>
+</div>
+
+<!-- Main Content -->
+<div class="about-content">
+    <!-- Misyon Section -->
+    <div class="about-section">
+        <h2>📖 Bizim Misyonumuz</h2>
+        <div class="mission-box">
+            <p>
+                Kitap severlere erişebilir, güvenli ve kullanıcı dostu bir platforma erişim sağlamak. 
+                Koleksiyonumuzdaki her kitabı, bilgi ve hayal gücü arayan okuyucuların yaşamına değer katan 
+                kaynaklar olarak görmekteyiz.
+            </p>
+        </div>
+    </div>
+
+    <!-- İstatistikler -->
+    <div class="stats-container">
+        <div class="stat-box">
+            <h3>5000+</h3>
+            <p>Kitap Koleksiyonu</p>
+        </div>
+        <div class="stat-box">
+            <h3>2500+</h3>
+            <p>Aktif Üye</p>
+        </div>
+        <div class="stat-box">
+            <h3>50+</h3>
+            <p>Kategori</p>
+        </div>
+        <div class="stat-box">
+            <h3>98%</h3>
+            <p>Müşteri Memnuniyeti</p>
+        </div>
+    </div>
+
+    <!-- Hakkımızda Section -->
+    <div class="about-section">
+        <h2>🏢 Biz Kimiz?</h2>
+        <p>
+            Kitap Dünyası, 2020 yılında kurulan ve teknoloji ile edebiyatı bir araya getiren 
+            yenilikçi bir platform. Ülkenin dört bir köşesinden gelen kitap severler için bir buluşma noktası 
+            olup, çeşitli kategorilerde binlerce başlıkla hizmet vermekteyiz.
+        </p>
+        <p>
+            Kullanıcılarımızın ihtiyaçlarını anlamak ve en iyi deneyimi sunmak için sürekli gelişiyoruz. 
+            Her kitap, her yorum ve her değerlendirme bizim için önemlidir çünkü okuma kültürünü yaygınlaştırmak 
+            ve kitap severler arasında bir topluluk oluşturmak hedefimiz.
+        </p>
+    </div>
+
+    <!-- Özellikler -->
+    <div class="about-section">
+        <h2>✨ Neden Bizi Seçmelisiniz?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Kolay Arama</h3>
+                <p>Binlerce kitap arasında istediğinizi saniyeler içinde bulun</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⭐</div>
+                <h3>Değerlendirmeler</h3>
+                <p>Diğer okuyucuların görüşlerini okuyun ve kitapları değerlendirin</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛒</div>
+                <h3>Kolay Satın Alma</h3>
+                <p>Güvenli ödeme sistemi ile rahat alışveriş yapın</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📦</div>
+                <h3>Hızlı Teslimat</h3>
+                <p>Siparişiniz hızlı ve güvenli şekilde kapınıza ulaşır</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>Topluluğun Gücü</h3>
+                <p>Kitap severlerle fikirlerini paylaş ve yorum yaz</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎁</div>
+                <h3>Özel İndirimler</h3>
+                <p>Düzenli promosyon ve indirimlerden yararlan</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Takım Section -->
+    <div class="team-section">
+        <h2>👥 Ekibimiz</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 30px;">
+            Deneyimli ve tutkulu profesyonellerden oluşan ekibimiz, her gün sizin için daha iyi bir hizmet sunmak için çalışmaktadır.
+        </p>
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="member-avatar">👨‍💼</div>
+                <h4>Kaan Vural Polat</h4>
+                <p>Kurucu & CEO İşçi</p>
+            </div>
+            <div class="team-member">
+                <div class="member-avatar">👨‍💼</div>
+                <h4>Hamza Birinci</h4>
+                <p>İşçi</p>
+            </div>
+            <div class="team-member">
+                <div class="member-avatar">👨‍💼</div>
+                <h4>Osman Orhun Demirdaş</h4>
+                <p>İşçi</p>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- İletişim Section -->
+    <div class="about-section">
+        <h2>📞 Bizimle İletişime Geçin</h2>
+        <p>
+            Herhangi bir sorunuz, öneriniz veya geri bildiriminiz varsa lütfen bize yazın. 
+            Ekibimiz en kısa sürede sizinle iletişime geçmekten mutlu olacaktır.
+        </p>
+        <div style="margin-top: 25px;">
+            <p style="margin: 10px 0;">
+                <strong style="color: var(--secondary-color);">📧 E-posta:</strong> 
+                <span style="color: var(--text-secondary);">info@kitapkutuphanes.com</span>
+            </p>
+            <p style="margin: 10px 0;">
+                <strong style="color: var(--secondary-color);">📱 Telefon:</strong> 
+                <span style="color: var(--text-secondary);">+90 (212) 555-0123</span>
+            </p>
+            <p style="margin: 10px 0;">
+                <strong style="color: var(--secondary-color);">📍 Adres:</strong> 
+                <span style="color: var(--text-secondary);">Çankaya, Ankara, Türkiye</span>
+            </p>
+        </div>
+        <a href="@Url.Action("Contact", "Home")" class="btn btn-primary" style="margin-top: 20px;">
+            Detaylı İletişim Formu →
+        </a>
+    </div>
+</div>

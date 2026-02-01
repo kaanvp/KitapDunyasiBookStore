@@ -1,0 +1,12 @@
+﻿<form method="post" asp-action="OdemeYap">
+    <input type="hidden" name="siparisID" value="@ViewBag.SiparisID" />
+
+    <label>Ödeme Türü</label>
+    <select name="odemeTuru">
+        <option>KrediKarti</option>
+        <option>Havale</option>
+        <option>KapidaOdeme</option>
+    </select>
+
+    <button type="submit">Ödemeyi Tamamla</button>
+</form>

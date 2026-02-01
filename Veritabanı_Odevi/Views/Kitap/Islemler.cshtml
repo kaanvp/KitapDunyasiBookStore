@@ -1,0 +1,226 @@
+@{
+    ViewData["Title"] = "Kitap İşlemleri";
+}
+
+<style>
+    :root {
+        --primary-color: #16202A;
+        --primary-light: #1E2A38;
+        --secondary-color: #3B82F6;
+        --accent-color: #F59E0B;
+        --success-color: #10B981;
+        --danger-color: #EF4444;
+        --dark-color: #0F1419;
+        --light-gray: #1A2332;
+        --medium-gray: #374151;
+        --text-color: #F9FAFB;
+        --text-secondary: #D1D5DB;
+        --text-muted: #9CA3AF;
+        --border-color: #374151;
+        --card-bg: #1E2A38;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+    }
+
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--primary-color);
+    }
+
+    .page-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+        padding: 50px 30px;
+        border-radius: 12px;
+        margin-bottom: 60px;
+        text-align: center;
+        color: var(--text-color);
+    }
+
+    .page-header h1 {
+        font-size: 2.8rem;
+        margin: 0 0 10px 0;
+        font-weight: 700;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .page-header p {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        margin: 0;
+    }
+
+    .operations-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+
+    .operation-card {
+        background: var(--card-bg);
+        border: 2px solid var(--border-color);
+        border-radius: 12px;
+        padding: 40px 30px;
+        text-align: center;
+        transition: all 0.3s ease;
+        box-shadow: var(--shadow);
+        cursor: pointer;
+        text-decoration: none;
+        color: var(--text-color);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 250px;
+    }
+
+    .operation-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--secondary-color);
+    }
+
+    /* Card Variant Classes */
+    .operation-card.kitap-listele {
+        border-color: var(--secondary-color);
+    }
+
+    .operation-card.kitap-listele:hover {
+        background: rgba(59, 130, 246, 0.1);
+        border-color: var(--secondary-color);
+    }
+
+    .operation-card.kitap-ekle {
+        border-color: var(--success-color);
+    }
+
+    .operation-card.kitap-ekle:hover {
+        background: rgba(16, 185, 129, 0.1);
+        border-color: var(--success-color);
+    }
+
+    .operation-card.kitap-duzenle {
+        border-color: var(--accent-color);
+    }
+
+    .operation-card.kitap-duzenle:hover {
+        background: rgba(245, 158, 11, 0.1);
+        border-color: var(--accent-color);
+    }
+
+    .operation-card.kitap-sil {
+        border-color: var(--danger-color);
+    }
+
+    .operation-card.kitap-sil:hover {
+        background: rgba(239, 68, 68, 0.1);
+        border-color: var(--danger-color);
+    }
+
+    .card-icon {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        display: block;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .card-description {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 24px;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        color: var(--text-color);
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        margin-bottom: 40px;
+    }
+
+    .back-button:hover {
+        background: var(--primary-light);
+        border-color: var(--secondary-color);
+    }
+
+    .info-box {
+        background: rgba(59, 130, 246, 0.1);
+        border-left: 4px solid var(--secondary-color);
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 40px;
+        color: var(--text-secondary);
+    }
+
+    .info-box strong {
+        color: var(--text-color);
+    }
+</style>
+
+<div class="page-container">
+    <a href="@Url.Action("Index", "Home")" class="back-button">
+        ← Anasayfaya Dön
+    </a>
+
+    <div class="page-header">
+        <h1>📚 Kitap İşlemleri</h1>
+        <p>Katalog yönetimi için gerekli işlemlerinizi seçin</p>
+    </div>
+
+    <div class="operations-grid">
+        <!-- Tüm Kitapları Listele -->
+        <a href="@Url.Action("KitapListele", "Kitap")" class="operation-card kitap-listele">
+            <span class="card-icon">📖</span>
+            <div class="card-title">Tüm Kitaplar</div>
+            <div class="card-description">
+                Katalogdaki tüm kitapları görüntüleyin ve yönetin
+            </div>
+        </a>
+
+        <!-- Kitap Ekle -->
+        <a href="@Url.Action("KitapEkle", "Kitap")" class="operation-card kitap-ekle">
+            <span class="card-icon">➕</span>
+            <div class="card-title">Kitap Ekle</div>
+            <div class="card-description">
+                Yeni bir kitabı kataloga ekleyin
+            </div>
+        </a>
+
+        <!-- Kitap Düzenle -->
+        <a href="@Url.Action("KitapDuzenle", "Kitap")" class="operation-card kitap-duzenle">
+            <span class="card-icon">✏️</span>
+            <div class="card-title">Kitap Düzenle</div>
+            <div class="card-description">
+                Mevcut kitap bilgilerini güncelleyin
+            </div>
+        </a>
+    </div>
+
+    <div class="info-box">
+        <strong>ℹ️ Bilgi:</strong>
+        <p style="margin: 8px 0 0 0;">
+            Düzenle ve Sil işlemleri için önce Tüm Kitaplar sayfasında kitabı seçiniz. 
+            Her kitabın yanında düzenleme ve silme seçenekleri yer almaktadır.
+        </p>
+    </div>
+</div>
