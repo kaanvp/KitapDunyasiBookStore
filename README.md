@@ -1,0 +1,7 @@
+![Anasayfa Ekranı](ss1.jpg)
+![Giriş/Kayıt Ekranı](ss2.jpg)
+![Kitap Ekranı](ss3.jpg)
+![Kitap Arama Ekranı](ss4.jpg)
+![İndirim Ekranı](ss5.jpg)
+![Detay Ekranı](ss6.jpg)
+![Yorumlar Ekranı](ss7.jpg)
